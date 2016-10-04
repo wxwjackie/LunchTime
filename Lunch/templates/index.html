@@ -13,6 +13,7 @@
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 	<!-- //for-mobile-apps -->	
 	<!-- js -->
+	<script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
 		<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
 	<!-- js -->
 	<!-- cart -->
@@ -117,6 +118,7 @@
 </br>
 </br>
 </br>
+
 <form method="get">
 <div class="menu">
 	<div class="container">
@@ -131,9 +133,9 @@
 					<p>Description </p>
 				</li>
 				<li class="bt-nn">
-				<div class="wan-spinner wan-spinner-2"> <a href="javascript:void(0)" class="minus">-</a>
-    				<input type="text" value="0">
-    				<a href="javascript:void(0)" class="plus">+</a></div>
+				<div class="wan-spinner wan-spinner-2"> <a href="javascript:void(0)" class="minus" onclick="minus_test({{cousine.id}})">-</a>
+    				<input type="text" id= "product_{{cousine.id}}" value="0" disabled="true"></input>
+    				<a href="javascript:void(0)" class="plus" onclick="plus_test({{cousine.id}})">+</a></div>
 				</li>
 				<div class="clearfix"></div>
 			</div>
@@ -141,8 +143,7 @@
 		</div>
 	</div>
 </div>
-<div class="check-out"><input type="submit" value="CHECK OUT"/></div>
-
+<div class="check-out"><input type="submit" value="CHECK OUT" /></div>
 </form>
 <!-- <div class="order"><a href="{% url "checkout" %}">CHECK OUT</a></div> -->
 </br>
@@ -197,5 +198,21 @@
 	</script>
 	<a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
 <!-- //smooth scrolling -->
+<script type="text/javascript">
+function plus_test(intid){
+	var idname = "#product_" + intid
+	var intvalue = parseInt($(idname).val());
+	$(idname).val( parseInt(intvalue + 1));
+	//document.write(intvalue);
+}
+function minus_test(intid){
+	var idname = "#product_" + intid;
+	var intvalue = parseInt($(idname).val());
+	if (intvalue > 0){
+		$(idname).val( parseInt(intvalue - 1));
+	}
+	
+}
+</script>
 </body>
 </html>
