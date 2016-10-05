@@ -139,36 +139,14 @@
 </div>
 <!-- //banner -->
 </br>
-</br>
-</br>
-</br>
-
-
+</br></br></br></br></br>
 <div class="menu">
 	<div class="container">
 		<div class="our-menu-grids">
-			<!-- here, we use for item in django to get the manu from database -->
-			{% for cousine in manu_list %}
-			<div class="order-top">
-				<li class="im-g"><a href="#"><img src="{% static "images/k1.jpg" %}" class="img-responsive" alt=""></a></li>
-				<li class="data">
-					<h3>{{ cousine.cousine_name}}</h3>
-					<h4>{{cousine.restaurant_name}}</h4>
-					<p>Description </p>
-				</li>
-				<li class="bt-nn">
-				<div class="wan-spinner wan-spinner-2"> <a href="javascript:void(0)" class="minus" onclick="minus_test({{cousine.id}})">-</a>
-    				<input class="product_item" type="text" id= "product_{{cousine.id}}" value="0" disabled="true"></input>
-    				<a href="javascript:void(0)" class="plus" onclick="plus_test({{cousine.id}})">+</a>
-    			</div>
-				</li>
-				<div class="clearfix"></div>
-			</div>
-			{%endfor%}
+		<h3 ><font color="#FF0000" style="font-weight:bold">FAILED!</font></h3>
 		</div>
 	</div>
 </div>
-<div class="check-out"><input type="submit" value="CHECK OUT" onclick="checkout()"/></div>
 
 <!-- <div class="order"><a href="{% url "checkout" %}">CHECK OUT</a></div> -->
 </br>
@@ -256,9 +234,9 @@ function checkout(){
 		var data = {"product_list[]":_list_product , "quantity_list[]":_list_quantity}
 		jQuery.post('{% url 'checkout'%}', data, function(res){
 			if (res['result']){
-				window.location.href= '{% url 'checkout_success'%}'
+				window.location.href= '{% url 'login'%}'
 			}else{
-				window.location.href= '{% url 'checkout_fail'%}'
+				window.location.href= '{% url 'register'%}'
 			}
 		})
 	}

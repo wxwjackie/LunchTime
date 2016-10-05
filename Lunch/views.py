@@ -7,6 +7,8 @@ from django.views.decorators.csrf import csrf_protect
 from .models import CousineBase, RestaurantBase
 from django.forms import formset_factory
 from .DishForm import DishForm
+import OrderUtils
+import json
 
 @csrf_protect
 def login(request):
@@ -51,12 +53,31 @@ def home_page(request):
     load the home page
     '''
     manu_list = CousineBase.objects.all()
-    
+    print manu_list
     user_name = request.session.get('username')
     '''
+    for manu in manu_list:
+        form_dict = {}
+        form_dict['dish_name'] = manu.cousine_name
+        form_dict['dish_restaurant'] = manu.restaurant_name
+        form_dict['dish_quantity'] = 0
+        form_dict['dish_description'] = ""
+        init_form_list.append(form_dict)
+    
+    print init_form_list
+    
+    
     order_form_set = formset_factory(DishForm)
     
+    formset = order_form_set(initial = init_form_list)
+    
+    print formset
+    
+    order_form_set = formset_factory(DishForm)
+    
+    
     formset = order_form_set()
+    
     
     if request.method == "POST":
         formset = order_form_set(request.POST)
@@ -66,19 +87,54 @@ def home_page(request):
     '''
     if user_name:
         return render(request, 'index.html', {'user_login': True, 'user_name': user_name, 'manu_list':manu_list})
+        #return render(request, 'index.html', {'user_login': True, 'user_name': user_name, 'formset':formset})
     else:
-        return render(request, 'index.html', {'manu_list':manu_list})
-        
+        return render(request, 'index.html', {'manu_list': manu_list})
+        #return render(request, "index.html", {'formset': formset})
 
 def checkout(request):
     '''
     now checkout
     '''
-    if request.method == "GET":
-        print request.GET
     user_name = request.session.get('username')
     
     if user_name:
-        return HttpResponse("Checkout!")
+        if request.method == "GET":
+            print request.GET
+        else:
+            product_list =  request.POST.getlist('product_list[]')
+            product_quantity = request.POST.getlist('quantity_list[]')
+            
+            product_list = OrderUtils.idenfity_product_id(product_list)
+            response_data={}
+            if OrderUtils.generate_order(user_name, product_list, product_quantity):
+                response_data['result'] = True
+            else:
+                response_data['result'] = False
+
+            return HttpResponse(json.dumps(response_data), content_type="application/json")
     else:
         return HttpResponseRedirect('/login/')
+
+def checkout_success(request):
+    '''
+    '''
+    user_name = request.session.get('username')
+    if user_name:
+        return render(request, 'checkoutsuccess.html', {'user_login': True, 'user_name': user_name})
+    else:
+        return HttpResponseRedirect('/login/')
+    
+def checkout_fail(request):
+    '''
+    '''
+    user_name = request.session.get('username')
+    if user_name:
+        return render(request, 'checkoutfail.html', {'user_login': True, 'user_name': user_name})
+    else:
+        return HttpResponseRedirect('/login/')
+    
+    
+    
+    
+    

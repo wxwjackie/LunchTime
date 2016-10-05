@@ -1,4 +1,5 @@
 from django.db import models
+from register.models import UserRecord
 
 # Create your models here.
 class RestaurantBase(models.Model):
@@ -91,15 +92,31 @@ class OrderBase(models.Model):
     THe order of a transaction
     """
     # the placing time of the order
-    order_time = models.TimeField()
+    order_time = models.TimeField(auto_now_add=True)
     #the expected time the food expected
     expected_time = models.CharField(max_length=25, choices=SERVICE_TYPE)
-    order_by_one = models.ForeignKey(StaffBase)
-    order_by_group = models.ForeignKey(GroupBase)
+    order_by_one = models.ForeignKey(UserRecord)
     cousine = models.ForeignKey(CousineBase)
     order_state = models.CharField(max_length=25, choices=ORDER_STATE)
 
+    def __str__(self):
+        return self.order_serial_no
 
+class OrderRecord(models.Model):
+    """
+    THe order of a transaction
+    """
+    # the placing time of the order
+    order_time = models.TimeField(auto_now_add=True)
+    order_serial_no = models.CharField(max_length=25)
+    #the expected time the food expected
+    expected_time = models.CharField(max_length=25, choices=SERVICE_TYPE)
+    order_by_one = models.ForeignKey(UserRecord)
+    cousine = models.ForeignKey(CousineBase)
+    order_state = models.CharField(max_length=25, choices=ORDER_STATE)
+
+    def __str__(self):
+        return self.order_serial_no
     
     
     

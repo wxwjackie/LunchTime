@@ -25,4 +25,6 @@ urlpatterns = [
     url(r'^register/', register_views.index, name='register'),
     url(r'^logout/', views.logout, name='logout'),
     url(r'^checkout/', views.checkout, name='checkout'),
+    url(r'checkoutsuccess/', views.checkout_success, name='checkout_success'),
+    url(r'checkoutfail/', views.checkout_fail, name='checkout_fail'),
 ]
