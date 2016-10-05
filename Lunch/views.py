@@ -4,9 +4,7 @@ from .LunchLoginForm import LoginForm
 from register.models import UserRecord
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
-from .models import CousineBase, RestaurantBase
-from django.forms import formset_factory
-from .DishForm import DishForm
+from .models import CousineBase, RestaurantBase, NewOrderRecord
 import OrderUtils
 import json
 
@@ -134,6 +132,34 @@ def checkout_fail(request):
     else:
         return HttpResponseRedirect('/login/')
     
+def personal_info(request):
+    '''
+    display the personal information
+    '''
+    user_name = request.session.get('username')
+    
+    
+    #order_raw_list = NewOrderRecord.objects.values('order_serial_no').distinct().order_by('-order_serial_no')
+    
+    order_dict =  OrderUtils.get_last_n_order(1)
+    
+    history_order_dict = OrderUtils.get_last_n_order(5)
+  
+    
+    #order_list = []
+    '''
+    for order in order_raw_list:
+        order_list.append(order)
+    '''
+    
+    if user_name:
+        return render(request, 'personal.html', {'user_login': True, \
+                                                 'user_name': user_name, \
+                                                 'order_dict': order_dict, \
+                                                 'history_order': history_order_dict})
+    else:
+        return HttpResponseRedirect('/login/')
+        #return render(request, 'personal.html', {'user_login': True, 'user_name': user_name, 'order_list': order_list})
     
     
     

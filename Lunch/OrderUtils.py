@@ -6,7 +6,7 @@ Created on
 Order Utils, some module to generate the order 
 '''
 import time
-from .models import CousineBase, RestaurantBase, OrderRecord, SERVICE_TYPE, ORDER_STATE
+from .models import CousineBase, RestaurantBase, NewOrderRecord, SERVICE_TYPE, ORDER_STATE
 from register.models import UserRecord
 import re
 
@@ -40,19 +40,41 @@ def generate_order(user_name, product_list, quantity_list):
     
     order_id = generate_order_id()
     user_ = UserRecord.objects.filter(user_name__exact=user_name)
- 
+    i = 0
     for product_id in product_list:
         cousine = CousineBase.objects.get(id=product_id)
-        order = OrderRecord(order_serial_no=str(order_id), \
+        order = NewOrderRecord(order_serial_no=str(order_id), \
                            expected_time="Lunch", \
                            order_by_one= list(user_)[0],\
                            cousine=cousine,\
+                           quantity=quantity_list[i], \
                            order_state="Submitted")
+        
         order.save()
+        i = i + 1
     
     return True
     
-def get_order_list():
+def get_last_n_order(number=1):
     '''
-    get the order list before certain time
+    get the order list before certain time, return n
+    return:
+    
+    { 
+    id:[orderobj, orderobj,...],
+    ...
+    }
     '''
+    id_list = NewOrderRecord.objects.values('order_serial_no').distinct()[0:number]
+ 
+    ret_list = {}
+    
+    for id in id_list:
+        id_list = []
+        order_list = NewOrderRecord.objects.filter(order_serial_no__exact=id['order_serial_no'])
+
+        for order in order_list:
+            id_list.append(order)
+        ret_list[id['order_serial_no']] = id_list
+    return ret_list
+    

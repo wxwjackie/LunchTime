@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 {% load staticfiles %}
@@ -80,11 +81,10 @@
 					</ul>
 				{% endif %}
 				</div>
+
 				<div class="header-right">
 						<div class="cart box_1">
-							<a href="{% url "personal_info" %}">
-								<h3> Personal Account </h3>
-							</a>	
+							<a href="{% url 'homepage' %}"><h3>HomePage</h3></a>
 							<div class="clearfix"> </div>
 						</div>
 				</div>
@@ -93,63 +93,101 @@
 	</div>
 </div>
 
-<!-- //header -->
-<div class="copyrights">Collect from <a href="#" >Infinera CSIM Dev</a></div>
-<!-- banner -->
-<div class="banner-slider">
-	<div class="clearfix"></div>
-	<!-- banner-bottom -->
-		<div class="banner-bottom">
-			<div class="container">
-				<div class="bottom-grids">
-					<div class="col-md-4 bottom-grid text-center">	
-						<div class="btm-clr">
-							<figure class="icon">
-								<img src="{% static "images/k1.png" %}" alt="" />
-						  </figure>
-							<h3>New Dishes</h3>
-							<p> New Resturants and Snacks around us.</p>
-						</div>
-					</div>
-					<div class="col-md-4 bottom-grid btm-gre text-center">
-						<div class="btm-clr">
-							<figure class="icon">
-								<img src= "{% static "images/k2.png" %}" alt="" />
-						  </figure>
-							<h3>Popular</h3>
-							<p> Frequently ordered Food.</p>
-						</div>
-					</div>
-					<div class="col-md-4 bottom-grid text-center">
-						<div class="btm-clr">
-							<figure class="icon">
-								<img src="{% static "images/k3.png" %}" alt="" />
-						  </figure>
-							<h3>Special Offer</h3>
-							<p> Highly Recommended.</p>
-						</div>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-		</div>
-	<!-- //banner-bottom -->
-</div>
-<!-- //banner -->
-</br>
-</br></br></br></br></br>
-<div class="menu">
-	<div class="container">
-		<div class="our-menu-grids">
-		<h3 ><font color="#FF0000" style="font-weight:bold">FAILED!</font></h3>
-		</div>
-	</div>
+<div class="infineralogo">
+	<img src="{% static "images/InfineraLogo.jpg" %}" />
 </div>
 
-<!-- <div class="order"><a href="{% url "checkout" %}">CHECK OUT</a></div> -->
-</br>
-</br>
-<!-- footer-top -->
+<!-- 
+{% if password_is_wrong %}
+<h4>error</h4>
+{% endif %}
+<body>
+<div class="well">
+<form method='post'>
+	{% csrf_token %} 
+	<table>
+		{% for item in form %}
+		<tr>
+			<th>{{ item.label_tag}}</th>
+			</br>
+			<th>{{ item}}</th>
+		</tr>
+	{% endfor %}
+	</table>
+	</br>
+	<input type="submit" value="Login"></br></br>
+	<a href="{% url "register" %}">Register</a>
+</form>
+</div> -->
+<div>
+	<div class="basic-personal-info">
+		<h3>UserName:</h3>
+		<h4>{{user_name}}</h4>
+	</div>
+	<div class="clearfix"></div>
+	<div class="latest-order">
+		<table class="order-table" border="1">
+			<tr>
+				<th>OrderId</th>
+				<th>Order Time</th>
+				<th>LunchName</th>
+				<th>Restaurant Name</th>
+				<th>Quantity</th>
+				<th>State</th>
+			</tr>
+			{% for key, values in order_dict.items %}
+						{% for value in values %} <!-- key is serial no, value is objects list -->
+						<tr>
+							{% if forloop.first %}
+							<td rowspan="{{values|length}}"> {{key}}</td>
+							<td rowspan="{{values|length}}"> {{value.order_time }}</td>
+							{%endif%}
+							<td> {{value.cousine.cousine_name }}</td>
+							<td> {{value.cousine.restaurant_name}}</td>
+							<td> {{value.quantity }}</td>
+							{% if forloop.first %}
+								<td rowspan="{{values|length}}"> {{value.order_state }}</td>
+							{%endif%}
+						</tr>
+						{% endfor %}					
+			</tr>
+			{% endfor %}
+		</table>
+		</div>
+		<div class="clearfix"></div>
+		</br>
+		</br>
+	<div class="history-order">
+		<h3>History Orders</h3>
+		<table class="order-table" border="1">
+			<tr>
+				<th>OrderId</th>
+				<th>Order Time</th>
+				<th>LunchName</th>
+				<th>Restaurant Name</th>
+				<th>Quantity</th>
+				<th>State</th>
+			</tr>
+			{% for key, values in history_order.items %}
+						{% for value in values %} <!-- key is serial no, value is objects list -->
+						<tr>
+							{% if forloop.first %}
+							<td rowspan="{{values|length}}"> {{key}}</td>
+							<td rowspan="{{values|length}}"> {{value.order_time }}</td>
+							{%endif%}
+							<td> {{value.cousine.cousine_name }}</td>
+							<td> {{value.cousine.restaurant_name}}</td>
+							<td> {{value.quantity }}</td>
+							{% if forloop.first %}
+								<td rowspan="{{values|length}}"> {{value.order_state }}</td>
+							{%endif%}
+						</tr>
+						{% endfor %}					
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
 <div class="footer-top">
 	<div class="container">
 		<div class="col-md-3 footer-grid">
@@ -181,67 +219,5 @@
 		<div class="clearfix"></div>
 	</div>
 </div>
-
-<!-- //footer -->
-<!-- smooth scrolling -->
-	<script type="text/javascript">
-		$(document).ready(function() {
-		/*
-			var defaults = {
-			containerID: 'toTop', // fading element id
-			containerHoverID: 'toTopHover', // fading element hover id
-			scrollSpeed: 1200,
-			easingType: 'linear' 
-			};
-		*/								
-		$().UItoTop({ easingType: 'easeOutQuart' });
-		});
-	</script>
-	<a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
-<!-- //smooth scrolling -->
-<script type="text/javascript">
-function plus_test(intid){
-	var idname = "#product_" + intid
-	var intvalue = parseInt($(idname).val());
-	$(idname).val( parseInt(intvalue + 1));
-	//document.write(intvalue);
-}
-function minus_test(intid){
-	var idname = "#product_" + intid;
-	var intvalue = parseInt($(idname).val());
-	if (intvalue > 0){
-		$(idname).val( parseInt(intvalue - 1));
-	}
-}
-function checkout(){
-	var _list_product = [];
-	var _list_quantity = [];
-	$(".product_item").each(function(){
-		var quantity = parseInt($(this).val())
-		if (quantity <= 0)
-			return;
-		_list_product.push($(this).attr("id"));
-		_list_quantity.push($(this).val());
-	})
-	
-	if (_list_product.length == 0){
-		
-		document.write("No order")
-		return;
-	}else{
-		var data = {"product_list[]":_list_product , "quantity_list[]":_list_quantity}
-		jQuery.post('{% url 'checkout'%}', data, function(res){
-			if (res['result']){
-				window.location.href= '{% url 'login'%}'
-			}else{
-				window.location.href= '{% url 'register'%}'
-			}
-		})
-	}
-	//var list = $("a[class='product_item']").val();
-	
-	
-}
-</script>
 </body>
 </html>

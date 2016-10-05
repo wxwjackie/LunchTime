@@ -102,7 +102,8 @@ class OrderBase(models.Model):
     def __str__(self):
         return self.order_serial_no
 
-class OrderRecord(models.Model):
+
+class NewOrderRecord(models.Model):
     """
     THe order of a transaction
     """
@@ -113,10 +114,10 @@ class OrderRecord(models.Model):
     expected_time = models.CharField(max_length=25, choices=SERVICE_TYPE)
     order_by_one = models.ForeignKey(UserRecord)
     cousine = models.ForeignKey(CousineBase)
+    quantity = models.IntegerField()
     order_state = models.CharField(max_length=25, choices=ORDER_STATE)
 
     def __str__(self):
         return self.order_serial_no
-    
     
     

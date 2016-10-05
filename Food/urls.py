@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^checkout/', views.checkout, name='checkout'),
     url(r'checkoutsuccess/', views.checkout_success, name='checkout_success'),
     url(r'checkoutfail/', views.checkout_fail, name='checkout_fail'),
+    url(r'personal/', views.personal_info, name='personal_info'),
 ]
