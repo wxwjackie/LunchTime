@@ -137,11 +137,18 @@
 </div>
 <!-- //banner -->
 </br>
-</br></br></br></br></br>
+</br></br></br></br></br></br></br></br>
 <div class="menu">
 	<div class="container">
 		<div class="our-menu-grids">
-		<h3 ><font color="#FF0000" style="font-weight:bold">FAILED!</font></h3>
+		<h3 ><font color="#FF0000" style="font-weight:bold">CHECK OUT FAILED!</font></h3></br>
+		{% if product_zero %}
+		<h4><font color="#FF0000" >You did not select any of the Cousine, You could:
+			<a href="{% url 'homepage' %}">go to menu to order</a> or 
+			<a href="{% url 'logout' %}">logout</a></font>.
+		</h4>
+		{% endif %}
+		<h4></h4>
 		</div>
 	</div>
 </div>

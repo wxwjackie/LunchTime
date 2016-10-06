@@ -127,8 +127,12 @@ def checkout_fail(request):
     '''
     '''
     user_name = request.session.get('username')
+    product_zero = False;
+    if request.GET.has_key('product_num'):
+        product_zero = True;
+      
     if user_name:
-        return render(request, 'checkoutfail.html', {'user_login': True, 'user_name': user_name})
+        return render(request, 'checkoutfail.html', {'user_login': True, 'user_name': user_name, 'product_zero': product_zero})
     else:
         return HttpResponseRedirect('/login/')
     

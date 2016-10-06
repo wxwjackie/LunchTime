@@ -65,7 +65,7 @@ def get_last_n_order(number=1):
     ...
     }
     '''
-    id_list = NewOrderRecord.objects.values('order_serial_no').distinct()[0:number]
+    id_list = NewOrderRecord.objects.values('order_serial_no').distinct().order_by('-order_serial_no')[0:number]
  
     ret_list = {}
     

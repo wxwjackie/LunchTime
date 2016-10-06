@@ -80,7 +80,7 @@
 					</ul>
 				{% endif %}
 				</div>
-
+				
 				<div class="header-right">
 						<div class="cart box_1">
 							<a href="{% url "personal_info" %}">
@@ -140,7 +140,7 @@
 </br>
 </br>
 </br>
-</br>
+</br></br></br></br>
 
 
 <div class="menu">
@@ -165,9 +165,11 @@
 			</div>
 			{%endfor%}
 		</div>
+		<div class="check-out-container"><input type="submit" class="check-out" value="CHECK OUT" onclick="checkout()"/></div>
+	<div class="clearfix"></div>
 	</div>
 </div>
-<div class="check-out"><input type="submit" value="CHECK OUT" onclick="checkout()"/></div>
+
 
 <!-- <div class="order"><a href="{% url "checkout" %}">CHECK OUT</a></div> -->
 </br>
@@ -229,6 +231,7 @@ function plus_test(intid){
 	$(idname).val( parseInt(intvalue + 1));
 	//document.write(intvalue);
 }
+
 function minus_test(intid){
 	var idname = "#product_" + intid;
 	var intvalue = parseInt($(idname).val());
@@ -248,8 +251,7 @@ function checkout(){
 	})
 	
 	if (_list_product.length == 0){
-		
-		document.write("No order")
+		window.location.href= '{% url 'checkout_fail'%}?product_num=0'
 		return;
 	}else{
 		var data = {"product_list[]":_list_product , "quantity_list[]":_list_quantity}
