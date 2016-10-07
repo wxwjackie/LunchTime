@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from .models import CousineBase, RestaurantBase, NewOrderRecord
 import OrderUtils
+import EmailUtils
 import json
 
 @csrf_protect
@@ -145,9 +146,9 @@ def personal_info(request):
     
     #order_raw_list = NewOrderRecord.objects.values('order_serial_no').distinct().order_by('-order_serial_no')
     
-    order_dict =  OrderUtils.get_last_n_order(1)
+    order_dict =  OrderUtils.get_last_n_order(1, user_name)
     
-    history_order_dict = OrderUtils.get_last_n_order(5)
+    history_order_dict = OrderUtils.get_last_n_order(5, user_name)
   
     
     #order_list = []
@@ -164,6 +165,28 @@ def personal_info(request):
     else:
         return HttpResponseRedirect('/login/')
         #return render(request, 'personal.html', {'user_login': True, 'user_name': user_name, 'order_list': order_list})
+
+def summary(request):
+    '''
+    Summary
+    '''
+    
+    user_name = request.session.get('username')
+    
+    #order_raw_list = NewOrderRecord.objects.values('order_serial_no').distinct().order_by('-order_serial_no')
+    if user_name:
+        order_dict =  OrderUtils.get_today_order()
+        history_order_dict = OrderUtils.get_last_n_order(5)
+        param_dict = {'user_login': True, \
+                     'user_name': user_name, \
+                     'order_dict': order_dict, \
+                     'history_order': history_order_dict}
+        
+        EmailUtils.notify_admin("zhaoyin_thu@126.com", param_dict)
+        return render(request, 'summary.html', param_dict)
+        
+    else:
+        return HttpResponseRedirect('/login/')
     
     
     

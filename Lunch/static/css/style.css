@@ -35,6 +35,11 @@ padding:0;
 	padding:24px 0;
 	background: rgb(0,0,255);
 }
+.admin-header{
+	padding:24px 0;
+	background: rgb(0,64,64);
+	
+}
 .header-left{
 	float:left;
 	width:35%;

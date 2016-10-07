@@ -62,11 +62,11 @@
 </head>
 <body>
 <!-- header -->
-<div class="header">
+<div class="admin-header">
 	<div class="container">
 		<div class="top-header">
 				<div class="header-left">
-					<p>Personal View: Lunch Order System</p>
+					<p>Admin View: Lunch Order System</p>
 				</div>
 				<div class="login-section">
 				{% if user_login %}
@@ -95,7 +95,7 @@
 
 <div class="personal_display">
 <div class="history-order">
-		<p>Today's Order</p>
+		<p>Today's Order Summary</p>
 		<table id="customers">
 		<tr>
 			<th>OrderId</th>
@@ -103,7 +103,9 @@
 			<th>LunchName</th>
 			<th>Restaurant Name</th>
 			<th>Quantity</th>
+			<th>OrderBy</th>
 			<th>State</th>
+			
 		</tr>
 		{% for key, values in order_dict.items %}
 					{% for value in values %} <!-- key is serial no, value is objects list -->
@@ -116,6 +118,7 @@
 						<td> {{value.cousine.restaurant_name}}</td>
 						<td> {{value.quantity }}</td>
 						{% if forloop.first %}
+							<td rowspan="{{values|length}}"> {{value.order_by_one.user_name }}</td>
 							<td rowspan="{{values|length}}"> <a href="javascript:void(0)" onclick="change_state()">{{value.order_state }}</a>
 							</td>
 						{%endif%}
@@ -137,6 +140,7 @@
 			<th>LunchName</th>
 			<th>Restaurant Name</th>
 			<th>Quantity</th>
+			<th>OrderBy</th>
 			<th>State</th>
 		</tr>
 		{% for key, values in history_order.items %}
@@ -150,6 +154,7 @@
 						<td> {{value.cousine.restaurant_name}}</td>
 						<td> {{value.quantity }}</td>
 						{% if forloop.first %}
+							<td rowspan="{{values|length}}"> {{value.order_by_one.user_name }}</td>
 							<td rowspan="{{values|length}}"> {{value.order_state }}</td>
 						{%endif%}
 					</tr>
@@ -178,7 +183,10 @@
 		<td>Last Login</td><td>xx.xxx.xxx</td>
 		</tr>
 		<tr>
-		<td>Admin All</td><td><a href="{% url "summary" %}">Check All</a></td>
+		<td>Personal</td><td><a href="{% url "personal_info" %}">Go to personal view</a></td>
+		</tr>
+		<tr>
+		<td>Personal</td><td><a href="{% url "personal_info" %}">Send Email</a></td>
 		</tr>
 	</table>
 	</div>

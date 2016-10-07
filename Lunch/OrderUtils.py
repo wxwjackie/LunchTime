@@ -5,7 +5,7 @@ Created on
 
 Order Utils, some module to generate the order 
 '''
-import time
+import time, datetime
 from .models import CousineBase, RestaurantBase, NewOrderRecord, SERVICE_TYPE, ORDER_STATE
 from register.models import UserRecord
 import re
@@ -55,7 +55,7 @@ def generate_order(user_name, product_list, quantity_list):
     
     return True
     
-def get_last_n_order(number=1):
+def get_last_n_order(number=1, user_name=None):
     '''
     get the order list before certain time, return n
     return:
@@ -65,8 +65,17 @@ def get_last_n_order(number=1):
     ...
     }
     '''
-    id_list = NewOrderRecord.objects.values('order_serial_no').distinct().order_by('-order_serial_no')[0:number]
- 
+    
+    
+    id_list_queryset = NewOrderRecord.objects.values('order_serial_no').distinct().order_by('-order_serial_no')
+    
+    #filter the user
+    if user_name:
+        user_obj = UserRecord.objects.filter(user_name__exact=user_name)
+        id_list_queryset = id_list_queryset.filter(order_by_one__exact=user_obj)
+        
+    id_list = id_list_queryset[0:number]
+    
     ret_list = {}
     
     for id in id_list:
@@ -76,5 +85,32 @@ def get_last_n_order(number=1):
         for order in order_list:
             id_list.append(order)
         ret_list[id['order_serial_no']] = id_list
+    return ret_list
+
+
+def get_today_order():
+    '''
+    Get today's order
+    return:
+    {
+    id_1: [orderObj, orderObj,...],
+    id_2: [orderObj, orderObj,...],
+    ...}
+    '''
+    today_time_tuple = datetime.date.today().timetuple()
+    today_timestamp = time.mktime(today_time_tuple)
+    id_list = NewOrderRecord.objects.filter(order_serial_no__gte=today_timestamp).distinct()
+
+    ret_list = {}
+    
+    for id_item in id_list:
+        print type(id_item)
+        id_list = []
+        order_list = NewOrderRecord.objects.filter(order_serial_no__exact=id_item.order_serial_no)
+    
+        for order in order_list:
+            id_list.append(order)
+        ret_list[id_item.order_serial_no] = id_list
+        
     return ret_list
     

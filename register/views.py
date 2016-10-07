@@ -1,5 +1,5 @@
 from django.shortcuts import render, render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .RegisterForm import RegisterForm
 from .models import UserRecord
 from django.template import RequestContext
@@ -37,9 +37,12 @@ def index(request):
                 return HttpResponse("User Name existed. Please change to another.")
             
             UserRecord.objects.create(user_name=input_user_name, passwd=input_password)
-            return HttpResponse("Register successfully!!")
+            return HttpResponseRedirect('/registersuccess/')
     else:
         form = RegisterForm()
     
     return render(request, 'register.html', {'form': form})
     return render_to_response('regist.html',{'form': form}, context=RequestContext(request))
+
+def register_success(request):
+    return render(request, 'register_success.html')

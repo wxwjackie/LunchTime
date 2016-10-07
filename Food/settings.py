@@ -115,8 +115,18 @@ USE_L10N = True
 
 USE_TZ = True
 
+#session timeout setup
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+#email setup
+EMAIL_HOST='smtp.126.com'
+EMAIL_PORT=25
+EMAIL_HOST_USER='zhaoyin0811@126.com'
+EMAIL_HOST_PASSWORD='19860811'
+EMAIL_SUBJECT_PREFIX=u'[CoorCar]'
+EMAIL_USE_TLS = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
