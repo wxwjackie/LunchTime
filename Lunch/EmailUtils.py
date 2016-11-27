@@ -13,6 +13,7 @@ def notify_superadmin(admin, message):
     send the message to super admin
     '''
     
+    
 def notify_admin(admin, message_dict):
     '''
     send the message to admin, generally is the daily summary of today's lunch
@@ -21,6 +22,8 @@ def notify_admin(admin, message_dict):
     
     message_dict['name'] = subject
     html_content = loader.render_to_string('email_template.html', message_dict)
+    print admin
+    print html_content
     
     msg = EmailMessage(subject, html_content, EMAIL_HOST_USER, [admin])
     msg.content_subtype = "html" # Main content is now text/html

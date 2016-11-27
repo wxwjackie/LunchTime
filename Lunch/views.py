@@ -136,6 +136,7 @@ def checkout_fail(request):
         return render(request, 'checkoutfail.html', {'user_login': True, 'user_name': user_name, 'product_zero': product_zero})
     else:
         return HttpResponseRedirect('/login/')
+
     
 def personal_info(request):
     '''
