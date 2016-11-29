@@ -5,8 +5,10 @@ from register.models import UserRecord
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from .models import CousineBase, RestaurantBase, NewOrderRecord
+from Recommend.MostFreqRecommender import MostFreqRecommender
 import OrderUtils
 import EmailUtils
+import Recommend.RecommendUtils as RecommendUtils
 import json
 
 @csrf_protect
@@ -39,6 +41,7 @@ def login(request):
         print "GET"
         return render(request, 'login.html',{'form':form})
 
+
 def logout(request):
     """
     logout
@@ -51,45 +54,26 @@ def home_page(request):
     '''
     load the home page
     '''
-    manu_list = CousineBase.objects.all()
-    print manu_list
+    manu_list = []
+    #CousineBase.objects.all()
+
     user_name = request.session.get('username')
-    '''
-    for manu in manu_list:
-        form_dict = {}
-        form_dict['dish_name'] = manu.cousine_name
-        form_dict['dish_restaurant'] = manu.restaurant_name
-        form_dict['dish_quantity'] = 0
-        form_dict['dish_description'] = ""
-        init_form_list.append(form_dict)
-    
-    print init_form_list
-    
-    
-    order_form_set = formset_factory(DishForm)
-    
-    formset = order_form_set(initial = init_form_list)
-    
-    print formset
-    
-    order_form_set = formset_factory(DishForm)
-    
-    
-    formset = order_form_set()
-    
-    
-    if request.method == "POST":
-        formset = order_form_set(request.POST)
-        print "receive post"
-        print formset
-    #here, we need to get all the cousine data and pass them into the view
-    '''
+
     if user_name:
+        personal_list = MostFreqRecommender(user_name=user_name).recommend()
+        manu_list = []
+        if not personal_list:
+            manu_list = CousineBase.objects.all()
+        else:
+            manu_list = OrderUtils.get_cousine_by_name(personal_list)
+
         return render(request, 'index.html', {'user_login': True, 'user_name': user_name, 'manu_list':manu_list})
         #return render(request, 'index.html', {'user_login': True, 'user_name': user_name, 'formset':formset})
     else:
+        manu_list = CousineBase.objects.all()
         return render(request, 'index.html', {'manu_list': manu_list})
         #return render(request, "index.html", {'formset': formset})
+
 
 def checkout(request):
     '''
@@ -115,6 +99,7 @@ def checkout(request):
     else:
         return HttpResponseRedirect('/login/')
 
+
 def checkout_success(request):
     '''
     '''
@@ -123,7 +108,8 @@ def checkout_success(request):
         return render(request, 'checkoutsuccess.html', {'user_login': True, 'user_name': user_name})
     else:
         return HttpResponseRedirect('/login/')
-    
+
+
 def checkout_fail(request):
     '''
     '''
@@ -143,15 +129,10 @@ def personal_info(request):
     display the personal information
     '''
     user_name = request.session.get('username')
-    
-    
     #order_raw_list = NewOrderRecord.objects.values('order_serial_no').distinct().order_by('-order_serial_no')
-    
     order_dict =  OrderUtils.get_last_n_order(1, user_name)
-    
     history_order_dict = OrderUtils.get_last_n_order(5, user_name)
-  
-    
+
     #order_list = []
     '''
     for order in order_raw_list:
@@ -159,13 +140,14 @@ def personal_info(request):
     '''
     
     if user_name:
-        return render(request, 'personal.html', {'user_login': True, \
-                                                 'user_name': user_name, \
-                                                 'order_dict': order_dict, \
+        return render(request, 'personal.html', {'user_login': True,
+                                                 'user_name': user_name,
+                                                 'order_dict': order_dict,
                                                  'history_order': history_order_dict})
     else:
         return HttpResponseRedirect('/login/')
         #return render(request, 'personal.html', {'user_login': True, 'user_name': user_name, 'order_list': order_list})
+
 
 def summary(request):
     '''
@@ -178,9 +160,9 @@ def summary(request):
     if user_name:
         order_dict =  OrderUtils.get_today_order()
         history_order_dict = OrderUtils.get_last_n_order(5)
-        param_dict = {'user_login': True, \
-                     'user_name': user_name, \
-                     'order_dict': order_dict, \
+        param_dict = {'user_login': True,
+                     'user_name': user_name,
+                     'order_dict': order_dict,
                      'history_order': history_order_dict}
         
         EmailUtils.notify_admin("zhaoyin_thu@126.com", param_dict)

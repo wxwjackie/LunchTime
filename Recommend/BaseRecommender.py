@@ -1,15 +1,19 @@
 '''
-Created on 2016Äê11ÔÂ27ÈÕ
+Created on 2016
 
 @author: Jerry
 
 @attention: A base class for recommender
 '''
+import abc
+from Food.settings import RECOMMENDER_TYPE
 
-class BaseRecommender:
+
+class BaseRecommender(object):
     '''
     Base class for recommender system
     '''
+    __metaclass__ = abc.ABCMeta
     def __init__(self, user_name, Handler):
         '''
         @param user_name: the user's name on which the recommender applyes
@@ -18,10 +22,26 @@ class BaseRecommender:
         self._user_name = user_name
         self._recommend = Handler
     
-    
+    @abc.abstractmethod
     def recommend(self):
         """
         @attention: give recommendation to 
         @return: A list of the recommendation List with 
         """
         return NotImplemented
+
+class RecommenderFactory(object):
+    """
+    Factory class to init
+    """
+    @classmethod
+    def GetRecommender(cls, user_name):
+        """
+
+        :return:
+        """
+        if RECOMMENDER_TYPE == "MostFreq":
+            from MostFreqRecommender import MostFreqRecommender
+            return MostFreqRecommender(user_name)
+        else:
+            return None

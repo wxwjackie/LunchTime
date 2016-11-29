@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'Lunch.apps.LunchConfig',
     'register.apps.RegisterConfig',
+    'Recommend.apps.RecommendConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +48,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -123,7 +125,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 EMAIL_HOST='smtp.126.com'
 EMAIL_PORT=25
 EMAIL_HOST_USER='zhaoyin0811@126.com'
-EMAIL_HOST_PASSWORD='19860811'
+EMAIL_HOST_PASSWORD='xxxx'
 EMAIL_SUBJECT_PREFIX=u'[CoorCar]'
 EMAIL_USE_TLS = True
 
@@ -132,3 +134,5 @@ EMAIL_USE_TLS = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/Lunch/static/'
+
+RECOMMENDER_TYPE = 'MostFreq'

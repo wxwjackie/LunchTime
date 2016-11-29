@@ -6,7 +6,7 @@ Created on
 Order Utils, some module to generate the order 
 '''
 import time, datetime
-from .models import CousineBase, RestaurantBase, NewOrderRecord, SERVICE_TYPE, ORDER_STATE
+from models import CousineBase, RestaurantBase, NewOrderRecord, SERVICE_TYPE, ORDER_STATE
 from register.models import UserRecord
 import re
 
@@ -54,7 +54,8 @@ def generate_order(user_name, product_list, quantity_list):
         i = i + 1
     
     return True
-    
+
+
 def get_last_n_order(number=1, user_name=None):
     '''
     get the order list before certain time, return n
@@ -65,8 +66,7 @@ def get_last_n_order(number=1, user_name=None):
     ...
     }
     '''
-    
-    
+
     id_list_queryset = NewOrderRecord.objects.values('order_serial_no').distinct().order_by('-order_serial_no')
     
     #filter the user
@@ -113,4 +113,55 @@ def get_today_order():
         ret_list[id_item.order_serial_no] = id_list
         
     return ret_list
-    
+
+
+def get_orders_by_user(user_name, start=None, end=None):
+    '''
+    get the orders belong to certain user between time stamp start and end
+    :param user_name: user's name
+    :param start: time stamp start, default none, means all
+    :param end: time stamp end
+    :return: list of user orders
+    '''
+    ret_list = []
+    user_obj = UserRecord.objects.filter(user_name__exact=user_name)
+    if not user_obj:
+        return ret_list
+
+    if start is None or end is None:
+
+        ret_list = NewOrderRecord.objects.filter(order_by_one__exact=user_obj)
+    else:
+        ret_list = NewOrderRecord.objects.filter(order_by_one__exact=user_obj,
+                                                 order_serial_no__gte=start,
+                                                 order_serial_no__lte=end)
+
+    return ret_list
+
+
+def get_cousine_by_name(cousine_name):
+    '''
+    Get the full record of the cousine by name
+    :param cousine_name: cousine name, list or not
+    :return: object
+    '''
+    ret_list = []
+    if isinstance(cousine_name, list):
+        for cousine in cousine_name:
+            ret_list.append(list(CousineBase.objects.filter(cousine_name__exact=cousine))[0])
+    else:
+        ret_list.append(list(CousineBase.objects.filter(cousine_name__exact=cousine_name))[0])
+
+    return ret_list
+
+
+def get_cousine_list():
+    '''
+    Get all cousine list
+    :return:  a list
+    '''
+    return list(CousineBase.objects.all())
+
+
+if __name__ == '__main__':
+    print get_cousine_list()
