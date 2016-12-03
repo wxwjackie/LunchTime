@@ -4,6 +4,7 @@ Created on 2016
 
 Base Utils to process recommend system
 '''
+import math
 
 def OrderMapByValue(dict):
     """
@@ -66,5 +67,89 @@ if __name__ == '__main__':
     ret = OrderMapByValue(test_map)
     print ret
 
+
+class Similarity(object):
+    '''
+    A class to calculate the similarity of the two items, item might be the
+    '''
+    def __init__(self):
+        '''
+        Init the Similarity calculation method
+        '''
+
+    def __validate(self, feature_vector1, feature_vector2):
+        """
+
+        :param feature_vector1:
+        :param feature_vector2:
+        :return:
+        """
+
+        if not isinstance(feature_vector1, list) or \
+                not isinstance(feature_vector1, list):
+            print "feature should be a list"
+            return False
+
+        if len(feature_vector1) != len(feature_vector2):
+            print "feature dimension not match"
+            return False
+
+        return True
+
+
+    def cosine_similarity(self, feature_vector1, feature_vector2):
+        '''
+        TO calcaulate the consie similarity between the two feature vectors
+        :param feature_vector1: feature vector1 with number
+        :param feature_vector2: feature vector2
+        :return:  a float value represent the ConsineSimilarity
+        '''
+
+        if not self.__validate(feature_vector1, feature_vector2):
+            return 0
+
+        dot_multiply_value = 0
+        len_of_one = 0
+        len_of_two = 0
+        for i in range(0, len(feature_vector1)):
+            dot_multiply_value += (feature_vector1[i] * feature_vector2[i])
+            len_of_one += feature_vector1[i]**2
+            len_of_two += feature_vector2[i]**2
+
+        return (dot_multiply_value * 1.0)/(math.sqrt(len_of_one*1.0) * math.sqrt(len_of_two*1.0))
+
+
+    def manhattan_similarity(self, feature_vector1, feature_vector2):
+        '''
+        Calculate the Mahantan distance between two vector
+        :param feature_vector1:
+        :param feature_vector2:
+        :return:
+        '''
+        if not self.__validate(feature_vector1, feature_vector2):
+            return 0
+
+        distance = 0
+        for i in range(0, len(feature_vector1)):
+            distance += math.fabs(feature_vector1[i] - feature_vector2[i])
+
+        return distance
+
+
+    def eucildean_similarity(self, feature_vector1, feature_vector2):
+        '''
+        use Eucilidean distance to represent the mahantn distance
+        :param feature_vector1:
+        :param feature_vector2:
+        :return:
+        '''
+        if not self.__validate(feature_vector2, feature_vector1):
+            return 0
+
+        distance = 0
+        for i in range(0, len(feature_vector1)):
+            distance += (feature_vector1[i] - feature_vector2[i])**2
+
+        return distance
 
 

@@ -11,7 +11,8 @@ class ItemFeatureBase(models.Model):
     '''
     #feature name, i.e. materials, flavor, 
     cousine_id = models.ForeignKey(CousineBase)
-    
+
+    #feature
     materials_name = models.CharField(max_length=50)
     
     # cooked, fried, steamed, cooled
@@ -43,7 +44,7 @@ class UserFeatureBase(models.Model):
     Base class for User-profile feature, it's common feature for all the users' profile
     '''
     user_gender = models.CharField(max_length=50, choices=GENDER_TYPE)
-    user_age =    models.CharField(max_length=20, choices=AGE_RANGE)
+    user_age    = models.CharField(max_length=20, choices=AGE_RANGE)
     
 
     

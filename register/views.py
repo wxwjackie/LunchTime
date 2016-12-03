@@ -10,8 +10,6 @@ def index(request):
     to show the register forms
     '''
     
-    
-    
     if request.method == 'POST':
         '''
         If the method is POST

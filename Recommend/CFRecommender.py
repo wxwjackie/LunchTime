@@ -1,5 +1,5 @@
 '''
-Created on 2016Äê11ÔÂ27ÈÕ
+Created on 2016
 
 @author: Jerry
 
@@ -21,3 +21,4 @@ class CFRecommender(BaseRecommender):
         Use CF method to implement the recommend
         """
         return []
+
