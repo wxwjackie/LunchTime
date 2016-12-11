@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from .LunchLoginForm import LoginForm
-from register.models import UserRecord
+from register.models import UserRecord, AdminUserRecord
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from .models import CousineBase, RestaurantBase, NewOrderRecord
@@ -172,8 +172,59 @@ def summary(request):
         return HttpResponseRedirect('/login/')
 
 
-def administrator(request):
+@csrf_protect
+def admin_login(request):
+    '''
+    Login entry for administrator
+    '''
+    if request.method == "POST":
+        # binding form with data
+        form = LoginForm(request.POST)
+
+        if form.is_valid():
+            user_name = form.cleaned_data['user_name']
+            passwd = form.cleaned_data['passwd']
+            print user_name, passwd
+
+            # query the user name and passwd
+            if AdminUserRecord.objects.filter(admin_username__exact=user_name, admin_passwd__exact=passwd):
+                print "Login OK"
+                request.session['admin_username'] = user_name
+                return HttpResponseRedirect('/administrator/')
+            else:
+                # still in this page
+                print "Login failed"
+                return render(request, 'adminlogin.html', {'form':form, 'password_is_wrong': True})
+                # return render_to_response('adminlogin.html', {'form':form, 'password_is_wrong': True}, RequestContext(request))
+    else:
+        form = LoginForm()
+        print "GET"
+        return render(request, 'adminlogin.html', {'form':form})
+
+
+def admin_logout(request):
+    """
+    logout
+    """
+    print "admin logout"
+    del request.session['admin_username']
+    return HttpResponseRedirect('/Lunch/')
+
+
+def administrator_info(request):
     '''
     Administrator page with more rights
     '''
-    return HttpResponseRedirect('/login/')
+    user_name = request.session.get('admin_username')
+    order_dict =  OrderUtils.get_last_n_order(1, user_name)
+    history_order_dict = OrderUtils.get_last_n_order(5, user_name)
+
+    if user_name:
+        return render(request,
+                      'administrator.html',
+                      {'user_login': True,
+                       'user_name': user_name,
+                       'order_dict': order_dict,
+                       'history_order': history_order_dict})
+    else:
+        return HttpResponseRedirect('/adminlogin/')

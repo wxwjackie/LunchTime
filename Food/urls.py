@@ -20,15 +20,17 @@ from register import views as register_views
 
 urlpatterns = [
     url(r'^login/', views.login, name='login'),
+    url(r'^adminlogin/', views.admin_login, name='admin_login'),
     url(r'^Lunch/', views.home_page, name='homepage'),
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^register/', register_views.index, name='register'),
     url(r'^registersuccess/', register_views.register_success, name='register_success'),
     url(r'^logout/', views.logout, name='logout'),
+    url(r'^adminlogout/', views.admin_logout, name='admin_logout'),
     url(r'^checkout/', views.checkout, name='checkout'),
     url(r'^checkoutsuccess/', views.checkout_success, name='checkout_success'),
     url(r'^checkoutfail/', views.checkout_fail, name='checkout_fail'),
     url(r'^personal/', views.personal_info, name='personal_info'),
+    url(r'^administrator/', views.administrator_info, name='administrator_info'),
     url(r'^summary/', views.summary, name='summary'),
-    url(r'^administrator/', views.administrator, name='administrator'),
 ]
