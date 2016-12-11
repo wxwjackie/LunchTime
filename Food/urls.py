@@ -30,4 +30,5 @@ urlpatterns = [
     url(r'^checkoutfail/', views.checkout_fail, name='checkout_fail'),
     url(r'^personal/', views.personal_info, name='personal_info'),
     url(r'^summary/', views.summary, name='summary'),
+    url(r'^administrator/', views.administrator, name='administrator'),
 ]

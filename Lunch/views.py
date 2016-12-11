@@ -170,7 +170,10 @@ def summary(request):
         
     else:
         return HttpResponseRedirect('/login/')
-    
-    
-    
-    
+
+
+def administrator(request):
+    '''
+    Administrator page with more rights
+    '''
+    return HttpResponseRedirect('/login/')
