@@ -120,10 +120,11 @@
 						{% if forloop.first %}
                                                 <td rowspan="{{values|length}}">
                                                     <select id="someID" name="someID" onChange="change_state(this.options[this.selectedIndex].value)">
-                                                        <option>{{ value.order_state }}</option>
-                                                        <option value="1">Question 1</option>
-                                                        <option value="2">Question 2</option>
-                                                        <option value="3">Question 3</option>
+                                                        <option value='SUB'>{{ value.order_state }}</option>
+                                                        <option value="CAC">Canceled</option>
+                                                        <option value="CF">Confirmed</option>
+                                                        <option value="FR">Food Ready</option>
+                                                        <option value="FS">Finished</option>
                                                     </select>
                                                     <!--
                                                     <a href="javascript:void(0)" onclick="change_state()">{{value.order_state }}</a>
