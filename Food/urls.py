@@ -21,7 +21,7 @@ from register import views as register_views
 urlpatterns = [
     url(r'^login/', views.login, name='login'),
     url(r'^adminlogin/', views.admin_login, name='admin_login'),
-    url(r'^Lunch/', views.home_page, name='homepage'),
+    url(r'^lunch/', views.home_page, name='homepage'),
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^register/', register_views.index, name='register'),
     url(r'^registersuccess/', register_views.register_success, name='register_success'),
