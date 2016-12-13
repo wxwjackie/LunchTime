@@ -216,15 +216,13 @@ def administrator_info(request):
     Administrator page with more rights
     '''
     user_name = request.session.get('admin_username')
-    order_dict =  OrderUtils.get_last_n_order(1, user_name)
-    history_order_dict = OrderUtils.get_last_n_order(5, user_name)
+    order_dict =  OrderUtils.get_today_order()
 
     if user_name:
         return render(request,
                       'administrator.html',
                       {'user_login': True,
                        'user_name': user_name,
-                       'order_dict': order_dict,
-                       'history_order': history_order_dict})
+                       'order_dict': order_dict})
     else:
         return HttpResponseRedirect('/adminlogin/')

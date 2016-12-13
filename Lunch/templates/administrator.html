@@ -1,9 +1,8 @@
-{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 {% load staticfiles %}
 <head>
-	<title>Home</title>
+	<title>Admin User</title>
 			<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
 			<link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" media="all" />
 	<!-- for-mobile-apps -->
@@ -66,7 +65,10 @@
 	<div class="container">
 		<div class="top-header">
 				<div class="header-left">
-					<p>Personal View: Lunch Order System</p>
+                                    <p>
+                                        Administrator View:</br>
+                                        Lunch Order System
+                                    </p>
 				</div>
 				<div class="login-section">
 				{% if user_login %}
@@ -95,12 +97,12 @@
 
 <div class="personal_display">
 <div class="history-order">
-		<p>Today's Order</p>
+		<p>Order List</p>
 		<table id="customers">
 		<tr>
 			<th>OrderId</th>
 			<th>Order Time</th>
-			<th>LunchName</th>
+			<th>Dish Name</th>
 			<th>Restaurant Name</th>
 			<th>Quantity</th>
 			<th>State</th>
@@ -116,8 +118,17 @@
 						<td> {{value.cousine.restaurant_name}}</td>
 						<td> {{value.quantity }}</td>
 						{% if forloop.first %}
-							<td rowspan="{{values|length}}"> <a href="javascript:void(0)" onclick="change_state()">{{value.order_state }}</a>
-							</td>
+                                                <td rowspan="{{values|length}}">
+                                                    <select id="someID" name="someID" onChange="change_state(this.options[this.selectedIndex].value)">
+                                                        <option>{{ value.order_state }}</option>
+                                                        <option value="1">Question 1</option>
+                                                        <option value="2">Question 2</option>
+                                                        <option value="3">Question 3</option>
+                                                    </select>
+                                                    <!--
+                                                    <a href="javascript:void(0)" onclick="change_state()">{{value.order_state }}</a>
+                                                    -->
+                                                </td>
 						{%endif%}
 					</tr>
 					{% endfor %}					
@@ -128,38 +139,10 @@
 	<div class="clearfix"></div>
 	</br>
 	</br>
-
-	<p>History Orders</p>
-	<table class="order-table" id="customers">
-		<tr>
-			<th>OrderId</th>
-			<th>Order Time</th>
-			<th>LunchName</th>
-			<th>Restaurant Name</th>
-			<th>Quantity</th>
-			<th>State</th>
-		</tr>
-		{% for key, values in history_order.items %}
-					{% for value in values %} <!-- key is serial no, value is objects list -->
-					<tr>
-						{% if forloop.first %}
-						<td rowspan="{{values|length}}"> {{key}}</td>
-						<td rowspan="{{values|length}}"> {{value.order_time }}</td>
-						{%endif%}
-						<td> {{value.cousine.cousine_name }}</td>
-						<td> {{value.cousine.restaurant_name}}</td>
-						<td> {{value.quantity }}</td>
-						{% if forloop.first %}
-							<td rowspan="{{values|length}}"> {{value.order_state }}</td>
-						{%endif%}
-					</tr>
-					{% endfor %}					
-		</tr>
-		{% endfor %}
-	</table>
 </div>
+
 <div class="history-order">
-	<p>UserName: {{user_name}}</p>
+	<p>Admin User: {{user_name}}</p>
 	<div class="basic-personal-info">
 	<table>
 		<tr>
@@ -218,11 +201,31 @@
 </div>
 
 <script>
-function change_state(){
-	$(this).innerHTML="a";
-	//""<div><select><option value="">{{value.order_state }}</option><option value='United States'>United States</option><option value='United Kingdom'>United Kingdom</option></select></div>"
-	
-}							
+/*
+ * This script and many more are available free online at
+ * The JavaScript Source!! http://www.javascriptsource.com
+ * Created by: Ricom Productions | http://ricom.co.uk
+ */
+/*
+function change_state(frm)
+{
+    // Select the div containing all the hidden forms
+    var hiddenForms = document.getElementById("allForms");
+    
+    // Select every form within the above div and assign it to an array
+    theForm = hiddenForms.getElementsByTagName("form");
+    
+    // Set the display for each of the above forms to NONE
+    for(x=0; x<theForm.length; x++) {
+        theForm[x].style.display = "none";
+    }
+    
+    // If the form selected from the list exists, set it's display to BLOCK
+    if (theForm[frm-1]) {
+        theForm[frm-1].style.display = "block";
+    }
+*/
+}
 </script>
 </body>
 </html>
