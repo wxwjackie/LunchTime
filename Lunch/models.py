@@ -1,7 +1,33 @@
+# coding=utf-8
+#!/usr/bin/python
+
 from django.db import models
 from register.models import UserRecord
 
+
+help_txt = """
+1 . other   ;
+2 . chuan cai;
+3 . lu cai   ;
+4 . yue cai  ;
+5 . su cai   ;
+6 . min cai  ;
+7 . zhe cai  ;
+8 . xiang cai;
+9 . hui cai  ;
+10. qing zhen;
+11. bei jing cai;
+"""
 # Create your models here.
+class CookingTypeBase(models.Model):
+    '''
+            chuan, lu, yue, su, min,zhe, xiang, hui
+    '''
+    type_name = models.CharField(max_length=20, default="chuan")
+    type_num = models.IntegerField(null=False, default=2, primary_key=True, help_text=help_txt)
+    def __str__(self):
+        return self.type_name
+
 class RestaurantBase(models.Model):
     '''
     Restaurant
@@ -10,7 +36,9 @@ class RestaurantBase(models.Model):
     address = models.CharField(max_length=1024)
     #the telephone
     phone = models.CharField(max_length=50);
-    
+
+    type = models.ForeignKey(CookingTypeBase, on_delete=models.CASCADE)
+
     def __unicode__(self):
         return '%s' % (self.name)
 
@@ -38,14 +66,17 @@ class CousineBase(models.Model):
     #cousine name
     cousine_name = models.CharField(max_length=50)
     #restaurant name
-    restaurant_name = models.CharField(max_length=50)
+#     restaurant_name = models.CharField(max_length=50)
+    restaurant_name = models.ForeignKey(RestaurantBase, verbose_name="restaurant_name", default="null")
     #price
     cousine_price = models.CharField(max_length=25)
     #service time
     service_time = models.CharField(max_length=25)
+    # restaurant FK
+#     restaurant_id = models.ForeignKey(RestaurantBase, on_delete=models.CASCADE, default=1)
     
     def __str__(self):
-        return self.restaurant_name
+        return self.cousine_name
     
     
 #Now the following is the employee information
