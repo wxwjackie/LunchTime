@@ -10,6 +10,8 @@ class UserRecord(models.Model):
     user_name = models.CharField(max_length=50)
     passwd = models.TextField()
 
+    def __str__(self):
+        return self.user_name
 
 class AdminUserRecord(models.Model):
     '''

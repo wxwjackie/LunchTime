@@ -67,11 +67,11 @@ class CousineBase(models.Model):
     cousine_name = models.CharField(max_length=50)
     #restaurant name
 #     restaurant_name = models.CharField(max_length=50)
-    restaurant_name = models.ForeignKey(RestaurantBase, verbose_name="restaurant_name", default="null")
+    restaurant_name = models.ForeignKey(RestaurantBase, verbose_name="restaurant_name", default=0)
     #price
     cousine_price = models.CharField(max_length=25)
     #service time
-    service_time = models.CharField(max_length=25)
+    service_time = models.CharField(max_length=25, choices=SERVICE_TYPE)
     # restaurant FK
 #     restaurant_id = models.ForeignKey(RestaurantBase, on_delete=models.CASCADE, default=1)
     
