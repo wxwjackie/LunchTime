@@ -28,7 +28,7 @@ def login(request):
                 #now the login succeed
                 #return HttpResponse("Login Successfully!")
                 request.session['username'] = user_name
-                return HttpResponseRedirect('/Lunch/')
+                return HttpResponseRedirect('/lunch/')
                 #return render(request, 'index.html', {'user_login': True, 'user_name':user_name})
             else:
                 #still in this page
@@ -47,7 +47,7 @@ def logout(request):
     logout
     """
     del request.session['username']
-    return HttpResponseRedirect('/Lunch/')
+    return HttpResponseRedirect('/lunch/')
 
 
 def home_page(request):
@@ -208,7 +208,7 @@ def admin_logout(request):
     """
     print "admin logout"
     del request.session['admin_username']
-    return HttpResponseRedirect('/Lunch/')
+    return HttpResponseRedirect('/lunch/')
 
 
 def administrator_info(request):
@@ -226,3 +226,13 @@ def administrator_info(request):
                        'order_dict': order_dict})
     else:
         return HttpResponseRedirect('/adminlogin/')
+
+
+def order_state_change(request):
+    """
+    Change the order state according to the request
+    """
+    if request.method == "POST":
+        print "order state changed"
+        value = request.POST.get('data')
+        print value

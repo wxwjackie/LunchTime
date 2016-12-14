@@ -33,4 +33,5 @@ urlpatterns = [
     url(r'^personal/', views.personal_info, name='personal_info'),
     url(r'^administrator/', views.administrator_info, name='administrator_info'),
     url(r'^summary/', views.summary, name='summary'),
+    url(r'^orderstatechange/', views.order_state_change, name='order_state_change'),
 ]
