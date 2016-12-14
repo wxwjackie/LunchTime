@@ -67,10 +67,11 @@
 				<div class="header-left">
 					<p>Infinera Beijing Lunch Order System</p>
 				</div>
+
 				<div class="login-section">
 				{% if user_login %}
 					<ul>
-					<li><p> Welcome {{ user_name }}</p> </li> |
+					<li><a href="{% url "personal_info" %}">Welcome {{ user_name }}</a></li> |
 					<li><a href="{% url "logout" %}">Log out</a> </li>
 					</ul>
 				{% else %}
@@ -79,15 +80,6 @@
 						<li><a href="{% url "register" %}">Register</a> </li>
 					</ul>
 				{% endif %}
-				</div>
-				
-				<div class="header-right">
-						<div class="cart box_1">
-							<a href="{% url "personal_info" %}">
-								<h3> Personal Account </h3>
-							</a>	
-							<div class="clearfix"> </div>
-						</div>
 				</div>
 				<div class="clearfix"></div>
 		</div>
