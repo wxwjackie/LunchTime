@@ -186,7 +186,6 @@ def get_consine_frequency(user_name, include_all=True):
     @param include_all: if False, cousine that hasn't been orderd will not be returned
     '''
     order_list = get_orders_by_user(user_name)
-    print order_list
     if not order_list:
         return []
 
@@ -200,7 +199,6 @@ def get_consine_frequency(user_name, include_all=True):
     # include_all make whether return cousine hasn't been orderd
     if include_all:
         cousine_list = list(CousineBase.objects.all())
-        print cousine_list
         for cousine in cousine_list:
             if frequency_map.has_key(cousine.cousine_name):
                 continue
@@ -230,9 +228,24 @@ def get_resturant_frequency(user_name):
     print sorted_restarant_map
     return sorted_restarant_map
 
-        
 
+def get_CFR_data(include_all=False):
+    '''
+    return all the users' order data
+    '''
+    users = UserRecord.objects.all()
+    data = {}
+    for user in users:
+        data.setdefault(user.user_name, {})
+        user_data = get_consine_frequency(user.user_name, include_all)
+        if not user_data:
+            continue
+        total = sum([value[1] for value in user_data])
+        print user.user_name, total, user_data
+        for cousine, times in user_data:
+            data[user.user_name][cousine] = times / (total + 0.0)
 
+    return data
 
 
 if __name__ == '__main__':

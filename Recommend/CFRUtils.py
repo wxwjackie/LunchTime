@@ -72,10 +72,11 @@ def pearson_distance(prefs, person1, person2):
     # Calculate r (Pearson score)
     num = n * pSum - (sum1 * sum2)
     den = sqrt((n * sum1Sq - pow(sum1, 2)) * (n * sum2Sq - pow(sum2, 2)))
+
     if den == 0:
         return 0
 
-    return num / den
+    return num / (den + 0.0)
 
 def top_matches(perfs, person, n=5, dist_fun=pearson_distance):
     '''
@@ -103,7 +104,7 @@ def get_recommendation(perfs, person, dist_fun=pearson_distance):
     '''
     totals, sim_sums = {}, {}
     tops = top_matches(perfs, person, n=0, dist_fun=dist_fun)
-#     print tops
+    print tops
     for (sim, other) in tops:
         if sim <= 0: continue
         for item in perfs[other]:

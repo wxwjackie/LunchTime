@@ -45,6 +45,6 @@ class RecommenderFactory(object):
             return MostFreqRecommender(user_name)
         elif RECOMMENDER_TYPE == "Special" or RECOMMENDER_TYPE == "CFRecommend":
             from CFRecommender import CFRecommender
-            return CFRecommender(user_name)
+            return CFRecommender(user_name, 5)
         else:
             return None
