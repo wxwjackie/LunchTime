@@ -179,10 +179,11 @@ def get_cousine_list():
     return list(CousineBase.objects.all())
 
 
-def get_consine_frequency(user_name):
+def get_consine_frequency(user_name, include_all=True):
     '''
     Returen the consine list orderd by frequency
     Used to recommend consine
+    @param include_all: if False, cousine that hasn't been orderd will not be returned
     '''
     order_list = get_orders_by_user(user_name)
     print order_list
@@ -196,12 +197,14 @@ def get_consine_frequency(user_name):
         else:
             frequency_map[order.cousine.cousine_name] = 1
 
-    cousine_list = list(CousineBase.objects.all())
-    print cousine_list
-    for cousine in cousine_list:
-        if frequency_map.has_key(cousine.cousine_name):
-            continue
-        frequency_map[cousine.cousine_name] = 0
+    # include_all make whether return cousine hasn't been orderd
+    if include_all:
+        cousine_list = list(CousineBase.objects.all())
+        print cousine_list
+        for cousine in cousine_list:
+            if frequency_map.has_key(cousine.cousine_name):
+                continue
+            frequency_map[cousine.cousine_name] = 0
 
 
     sorted_frequency_map = sorted(frequency_map.items(), key=lambda d:d[1], reverse=True)

@@ -7,7 +7,7 @@ Created on 2016
 '''
 from BaseRecommender import BaseRecommender
 import Lunch.OrderUtils as OrderUtils
-import CollaborativeFiltering as CFUtil
+import CFRUtils as CFUtil
 
 class CFRecommender(BaseRecommender):
     """
@@ -18,10 +18,12 @@ class CFRecommender(BaseRecommender):
         self._recommend_num = recommend_num
         
     
+
     def Recommend(self, flag=None):
         """
         Use CF method to implement the recommend
         """
-        raw_list = OrderUtils.get_orders_by_user(self._user_name)
+
+        raw_list = OrderUtils.get_orders_by_user(self._user_name, False)
         return []
 

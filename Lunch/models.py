@@ -72,8 +72,8 @@ class CousineBase(models.Model):
     cousine_price = models.CharField(max_length=25)
     #service time
     service_time = models.CharField(max_length=25, choices=SERVICE_TYPE)
-    # restaurant FK
-#     restaurant_id = models.ForeignKey(RestaurantBase, on_delete=models.CASCADE, default=1)
+    # picture path
+    picture = models.CharField(max_length=512, default="null")
     
     def __str__(self):
         return self.cousine_name
