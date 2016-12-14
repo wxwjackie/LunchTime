@@ -105,8 +105,8 @@
 			<th>Dish Name</th>
 			<th>Restaurant Name</th>
 			<th>Quantity</th>
-                        <th>State</th>
-                        <th>Notify</th>
+                        <th>Order State</th>
+                        <th>Click to Notify</th>
 		</tr>
 		{% for key, values in order_dict.items %}
 					{% for value in values %} <!-- key is serial no, value is objects list -->
@@ -139,7 +139,9 @@
                                                         {% endif %}
                                                     </select>
                                                 </td>
-                                                <td> </td>
+                                                <td rowspan="{{values|length}}">
+                                                    <a id="notifyUser" href="javascript:void(0);" onClick="notify_user({{ key }});return false;">{{ value.order_by_one.email }}</a>
+                                                </td>
 						{%endif%}
 					</tr>
 					{% endfor %}					
@@ -212,9 +214,6 @@
 </div>
 
 <script>
-/*
- * 
- */
 function change_state(order_id)
 {
     var sel_item = document.getElementById("orderStateSel");
@@ -228,6 +227,32 @@ function change_state(order_id)
         // data that you will like to return 
         data: {'order_id': order_id,
                'order_state' : value},
+        // what to do when the call is success 
+        success: function(response){},
+        // what to do when the call is complete ( you can right your clean from code here )
+        complete: function(){},
+        // what to do when there is an error
+        error: function(xhr, textStatus, thrownError){}
+    });
+}
+
+function notify_user(order_id)
+{
+    var email = document.getElementById("notifyUser").innerHTML;
+    var text = "Will send an email to " + email + " to notify the user?";
+    var ret = confirm(text);
+    if(ret != true) {
+        return;
+    }
+
+    $.ajax({
+        // points to the url where your data will be posted
+        url:'/notifyuser/',
+        // post for security reason
+        type: "POST",
+        // data that you will like to return 
+        data: {'order_id': order_id,
+               'email' : email},
         // what to do when the call is success 
         success: function(response){},
         // what to do when the call is complete ( you can right your clean from code here )

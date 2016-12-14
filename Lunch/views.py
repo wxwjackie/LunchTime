@@ -247,3 +247,29 @@ def order_state_change(request):
             OrderUtils.change_order_state(order_id, new_state)
 
     return HttpResponseRedirect('/administrator/')
+
+
+def notify_user(request):
+    """
+    Notify the user
+    """
+    order_id = None
+    email = None
+
+    if request.method == "POST":
+        if 'order_id' in request.POST:
+            order_id = request.POST['order_id']
+        if 'email' in request.POST:
+            email = request.POST['email']
+        
+        if not order_id or not email:
+            return
+
+        order = NewOrderRecord.objects.get(order_serial_no=order_id)
+        state = order.order_state
+        user = order.order_by_one
+        print "Notifying the user [%s]; order state is [%s]" % (email, state)
+        
+        EmailUtils.notify_order_state_to_user(email, user, state)
+
+    return HttpResponseRedirect('/administrator/')

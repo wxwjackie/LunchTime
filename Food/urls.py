@@ -34,4 +34,5 @@ urlpatterns = [
     url(r'^administrator/', views.administrator_info, name='administrator_info'),
     url(r'^summary/', views.summary, name='summary'),
     url(r'^orderstatechange/', views.order_state_change, name='order_state_change'),
+    url(r'^notifyuser/', views.notify_user, name='notify_user'),
 ]
