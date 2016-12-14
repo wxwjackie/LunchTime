@@ -65,30 +65,24 @@
 <div class="header">
 	<div class="container">
 		<div class="top-header">
-				<div class="header-left">
-					<p>Personal View: Lunch Order System</p>
-				</div>
-				<div class="login-section">
-				{% if user_login %}
-					<ul>
-					<li><p> Welcome {{ user_name }}</p> </li> |
-					<li><a href="{% url "logout" %}">Log out</a> </li>
-					</ul>
-				{% else %}
-					<ul>
-						<li><a href="{% url "login" %}">Login</a> </li> |
-						<li><a href="{% url "register" %}">Register</a> </li>
-					</ul>
-				{% endif %}
-				</div>
-
-				<div class="header-right">
-						<div class="cart box_1">
-							<a href="{% url 'homepage' %}"><h3>HomePage</h3></a>
-							<div class="clearfix"> </div>
-						</div>
-				</div>
-				<div class="clearfix"></div>
+			<div class="header-left">
+				<p>Personal View: Lunch Order System</p>
+			</div>
+			<div class="login-section">
+			{% if user_login %}
+				<ul>
+				<li><a href="{% url "homepage" %}">HomePage</a></li> | 
+				<li><p> Welcome {{ user_name }}</p> </li> |
+				<li><a href="{% url "logout" %}">Log out</a> </li>
+				</ul>
+			{% else %}
+				<ul>
+					<li><a href="{% url "login" %}">Login</a> </li> |
+					<li><a href="{% url "register" %}">Register</a> </li>
+				</ul>
+			{% endif %}
+			</div>
+				
 		</div>
 	</div>
 </div>
