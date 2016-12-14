@@ -32,7 +32,7 @@ padding:0;
 }
 /*-- top-header --*/
 .header{
-	padding:24px 0;
+	padding:20px 0;
 	background: rgb(76,91,119);
 }
 .admin-header{
@@ -50,9 +50,9 @@ padding:0;
 	font-weight: 500;
 }
 .login-section{
-  float: left;
-  padding: 0 0px 0px 20px;
-  width: 20%;
+  float: right;
+  padding: 0px 0px 0px 20px;
+  width: 30%;
   text-align: right;
 }
 .login-section ul {
