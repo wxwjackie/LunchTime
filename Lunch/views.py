@@ -232,7 +232,18 @@ def order_state_change(request):
     """
     Change the order state according to the request
     """
+    new_state = None
+    order_id = None
+
     if request.method == "POST":
-        print "order state changed"
-        value = request.POST.get('data')
-        print value
+        if 'order_state' in request.POST:
+            new_state = request.POST['order_state']
+        if 'order_id' in request.POST:
+            order_id = request.POST['order_id']
+
+        print "Changing the order state to [%s] for order [%s]" % (new_state, order_id)
+
+        if order_id and new_state:
+            OrderUtils.change_order_state(order_id, new_state)
+
+    return HttpResponseRedirect('/administrator/')

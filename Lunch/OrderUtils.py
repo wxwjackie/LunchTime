@@ -24,11 +24,27 @@ def generate_order_id():
     return int(time.time())
 
 
-def change_order_state(order_id, old_state, new_state):
+def change_order_state(order_id, new_state):
     '''
     change the order state, from
     '''
+    if (not order_id) or (not new_state):
+        return False
+
+    order = NewOrderRecord.objects.get(order_serial_no=order_id)
+    if not order:
+        print "Failed to get order data from NewOrderRecord"
+        return False
+
+    print "BEFORE: order_id=[%s]; order_state=[%s]; new_state=[%s]" % (order.order_serial_no, order.order_state, new_state)
     
+    if order.order_state != new_state:
+        order.order_state = new_state
+        order.save()
+    
+    print "AFTER: order_id=[%s]; order_state=[%s]" % (order.order_serial_no, order.order_state)
+    return True
+
 
 def generate_order(user_name, product_list, quantity_list):
     '''

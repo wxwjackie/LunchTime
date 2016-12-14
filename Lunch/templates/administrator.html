@@ -120,22 +120,22 @@
 						<td> {{value.quantity }}</td>
 						{% if forloop.first %}
                                                 <td rowspan="{{values|length}}">
-                                                    <select id="orderStateSel" onChange="change_state(this.options[this.selectedIndex].value)">
+                                                    <select id="orderStateSel" onChange="change_state({{ key }})">
                                                         <option>{{ value.order_state }}</option>
                                                         {% if value.order_state != "Submitted" %}
-                                                        <option value="SUB">Submitted</option>
+                                                        <option>Submitted</option>
                                                         {% endif %}
                                                         {% if value.order_state != "Canceled" %}
-                                                        <option value="CAC">Canceled</option>
+                                                        <option>Canceled</option>
                                                         {% endif %}
                                                         {% if value.order_state != "Confirmed" %}
-                                                        <option value="CF">Confirmed</option>
+                                                        <option>Confirmed</option>
                                                         {% endif %}
                                                         {% if value.order_state != "Food Ready" %}
-                                                        <option value="FR">Food Ready</option>
+                                                        <option>Food Ready</option>
                                                         {% endif %}
                                                         {% if value.order_state != "Finished" %}
-                                                        <option value="FS">Finished</option>
+                                                        <option>Finished</option>
                                                         {% endif %}
                                                     </select>
                                                 </td>
@@ -215,21 +215,25 @@
 /*
  * 
  */
-function change_state(value)
+function change_state(order_id)
 {
+    var sel_item = document.getElementById("orderStateSel");
+    var value = sel_item[sel_item.selectedIndex].value;
+    //var text = sel_item[sel_item.selectedIndex].text;
     $.ajax({
         // points to the url where your data will be posted
         url:'/orderstatechange/',
         // post for security reason
         type: "POST",
         // data that you will like to return 
-        data: {value : value},
+        data: {'order_id': order_id,
+               'order_state' : value},
         // what to do when the call is success 
-        success:function(response){},
+        success: function(response){},
         // what to do when the call is complete ( you can right your clean from code here )
-        complete:function(){},
+        complete: function(){},
         // what to do when there is an error
-        error:function (xhr, textStatus, thrownError){}
+        error: function(xhr, textStatus, thrownError){}
     });
 }
 </script>
