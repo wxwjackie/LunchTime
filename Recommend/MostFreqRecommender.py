@@ -23,36 +23,14 @@ class MostFreqRecommender(BaseRecommender):
         self._date_end = date_end
         
     
-    def recommend(self):
+    def recommend(self, flag=None):
         '''
         Give recommender
         '''
-        
-        #first get the frequency of the user's order
-        raw_list = OrderUtils.get_orders_by_user(self._user_name)
-        print raw_list
-        if not raw_list:
-            return []
-        
-        frequency_map = {}
-        for order in raw_list:
-            if frequency_map.has_key(order.cousine.cousine_name):
-                frequency_map[order.cousine.cousine_name] += 1
-            else:
-                frequency_map[order.cousine.cousine_name] = 1
+        if not flag:
+            sorted_frequency_map = OrderUtils.get_consine_frequency(self._user_name)
+            print sorted_frequency_map
+        else:
+            sorted_frequency_map = OrderUtils.get_resturant_frequency(self._user_name)
+        return [item[0] for item in sorted_frequency_map]
 
-        cousine_list = OrderUtils.get_cousine_list()
-        print cousine_list
-        for cousine in cousine_list:
-            print cousine.cousine_name
-            if frequency_map.has_key(cousine.cousine_name):
-                continue
-            frequency_map[cousine.cousine_name] = 0
-
-
-        print frequency_map
-        return OrderMapByValue(frequency_map)
-
-
-        
-        
