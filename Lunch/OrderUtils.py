@@ -179,5 +179,58 @@ def get_cousine_list():
     return list(CousineBase.objects.all())
 
 
+def get_consine_frequency(user_name):
+    '''
+    Returen the consine list orderd by frequency
+    Used to recommend consine
+    '''
+    order_list = get_orders_by_user(user_name)
+    print order_list
+    if not order_list:
+        return []
+
+    frequency_map = {}
+    for order in order_list:
+        if frequency_map.has_key(order.cousine.cousine_name):
+            frequency_map[order.cousine.cousine_name] += 1
+        else:
+            frequency_map[order.cousine.cousine_name] = 1
+
+    cousine_list = list(CousineBase.objects.all())
+    print cousine_list
+    for cousine in cousine_list:
+        if frequency_map.has_key(cousine.cousine_name):
+            continue
+        frequency_map[cousine.cousine_name] = 0
+
+
+    sorted_frequency_map = sorted(frequency_map.items(), key=lambda d:d[1], reverse=True)
+    return  sorted_frequency_map
+
+
+def get_resturant_frequency(user_name):
+    '''
+    Retruen the resturant Frequency list by user.
+    Used to recommend resturant
+    '''
+    order_list = get_orders_by_user(user_name)
+    if not order_list:
+        return []
+    frequency_map = {}
+    for order in order_list:
+        restaurant = order.cousine.restaurant_name
+        frequency_map.setdefault(restaurant.name, 0)
+        frequency_map[restaurant.name] += 1
+    print frequency_map
+
+    sorted_restarant_map = sorted(frequency_map.items(), key=lambda d:d[1], reverse=True)
+    print sorted_restarant_map
+    return sorted_restarant_map
+
+        
+
+
+
+
 if __name__ == '__main__':
     print get_cousine_list()

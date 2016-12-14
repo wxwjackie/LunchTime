@@ -23,7 +23,7 @@ class BaseRecommender(object):
         self._recommend = Handler
     
     @abc.abstractmethod
-    def recommend(self):
+    def recommend(self, flag=None):
         """
         @attention: give recommendation to 
         @return: A list of the recommendation List with 
@@ -43,5 +43,8 @@ class RecommenderFactory(object):
         if RECOMMENDER_TYPE == "MostFreq":
             from MostFreqRecommender import MostFreqRecommender
             return MostFreqRecommender(user_name)
+        elif RECOMMENDER_TYPE == "Special" or RECOMMENDER_TYPE == "CFRecommend":
+            from CFRecommender import CFRecommender
+            return CFRecommender(user_name)
         else:
             return None
