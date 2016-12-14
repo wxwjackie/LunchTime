@@ -16,25 +16,28 @@ def index(request):
         '''
         #bind the form
         form = RegisterForm(request.POST)
-        
+
         if form.is_valid():
-            if form.cleaned_data['passwd'] != form.cleaned_data['confirm_passwd']:
+            if form.cleaned_data['password'] != form.cleaned_data['confirm_password']:
                 return HttpResponse('The passwords are inconsistent!')
-            
+
             input_user_name = form.cleaned_data['user_name']
-            input_password = form.cleaned_data['passwd']
+            input_password = form.cleaned_data['password']
+            input_email = form.cleaned_data['email']
             print input_user_name
             print input_password
-            
+            print input_email
+
             is_exist = UserRecord.objects.filter(user_name__exact=input_user_name)
-            print is_exist
             if is_exist:
                 '''
                 The user name is existing
                 '''
                 return HttpResponse("User Name existed. Please change to another.")
-            
-            UserRecord.objects.create(user_name=input_user_name, passwd=input_password)
+
+            UserRecord.objects.create(user_name=input_user_name,
+                                      passwd=input_password,
+                                      email=input_email)
             return HttpResponseRedirect('/registersuccess/')
     else:
         form = RegisterForm()
