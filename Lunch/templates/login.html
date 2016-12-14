@@ -40,7 +40,8 @@
 			<div class="col-md-6 log">
 					 <h3>LOGIN</h3>
 					 <div class="strip"></div>
-					 <p>Welcome, please enter the following to continue.</p>
+					 <p>Welcome, please enter the following to continue.<br/>
+					 	If you are the admin user, please use <a href="{% url "admin_login" %}">Admin login.</a></p>
 					 <form method='post'>
 					 {% csrf_token %} 
 							{% for item in form %}
@@ -48,8 +49,8 @@
 								{{ item}} {% if password_is_wrong %} <h4>error</h4> {% endif %}
 							{% endfor %}
 						<input type="submit" value="LOGIN">
-					 </form>
-					<a href="#">Forgot Password ?</a>
+					 </form>	 
+					 <a href="#">Forgot Password ?</a>
 			</div>
 			<div class="col-md-6 login-right">
 					<h3>NEW REGISTRATION</h3>
