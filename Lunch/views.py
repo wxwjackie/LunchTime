@@ -1,6 +1,6 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
-from .LunchLoginForm import LoginForm
+from .LunchLoginForm import LoginForm, CousineRegForm
 from register.models import UserRecord, AdminUserRecord
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
@@ -10,6 +10,8 @@ import OrderUtils
 import EmailUtils
 import Recommend.RecommendUtils as RecommendUtils
 import json
+from AdminUtils import create_new_cousine
+
 
 @csrf_protect
 def login(request):
@@ -284,9 +286,39 @@ def admin_add(request):
     """
     Add cousine by admin
     """
-    form = LoginForm()
-    print "GET"
-    return render(request, 'adminadd.html', {'form':form})
+
+    if request.method == "POST":
+        print request.FILES
+        if 'cousine_image' in request.FILES:
+            image = request.FILES["cousine_image"]
+        else:
+            image = None
+
+        form = CousineRegForm(request.POST)
+        if form.is_valid():
+            cousine_name = form.cleaned_data['cousine_name']
+            cousine_restaurant = form.cleaned_data['cousine_restaurant']
+            cousine_price = form.cleaned_data['cousine_price']
+            service_time = form.cleaned_data['service_time']
+            create_new_cousine(cousine_name=cousine_name,
+                               cousine_restaurant=cousine_restaurant,
+                               cousine_price=cousine_price,
+                               cousine_image=image,
+                               service_time=service_time)
+
+        else:
+            raise Exception
+
+
+        # create the obj
+        return HttpResponseRedirect('/registersuccess/')
+
+
+    else:
+        form = CousineRegForm()
+        print "GET"
+        return render(request, 'adminadd.html', {'form':form})
+
 
 
 def admin_change(request):
