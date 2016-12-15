@@ -42,7 +42,7 @@ padding:0;
 }
 .header-left{
 	float:left;
-	width:35%;
+	width:50%;
 }
 .header-left p{
 	color:#ffffff;
@@ -51,7 +51,7 @@ padding:0;
 }
 .login-section{
   float: right;
-  padding: 0px 0px 0px 20px;
+  padding: 7px 0px 0px 20px;
   width: 30%;
   text-align: right;
 }
@@ -883,7 +883,7 @@ font-size:16px;
 }
 .footer-grid ul li.list-one{
   background: url(../images/home.png) no-repeat 0px 9px;
-  padding-left: 36px;
+  padding: 10px 0px 5px 38px;
 }
 .footer-grid ul li.list-three{
   background: url(../images/iphone.png) no-repeat 0px 9px;
@@ -902,7 +902,7 @@ font-size:16px;
 /*-- footer --*/
 .footer{
 background:#f65a5b;
-padding:10px 0;
+padding:0 0 3px 0;
 }
 .footer-left{
 float:left;
@@ -910,7 +910,7 @@ width:100%;
 }
 .footer-right{
 float:right;
-width:24%;
+width:75%;
 }
 .footer-left p{
 margin: 8px 0 0 0;
@@ -2635,7 +2635,7 @@ a.simpleCart_empty {
 	  width: 24%;
 	}
 	.login-section {
-	  width: 20%;
+	  width: 40%;
 	}
 	.navigation ul li a {
 	  padding: 14px 0;
@@ -2727,7 +2727,7 @@ a.simpleCart_empty {
 	  font-size: 19px;
 	  }
 	.good-left p {
-	  font-size: 13px;
+	  font-size: 22px;
 	}
 	.good-left p:nth-child(4) {
 	  margin-top: 16px;
@@ -2743,6 +2743,9 @@ a.simpleCart_empty {
 	  padding-bottom: 70px;
 	}
 	.delicious {
+	  padding: 70px 0;
+	}
+	.delicious h4{
 	  padding: 70px 0;
 	}
 	.delicious-info h3 {
@@ -2775,7 +2778,7 @@ a.simpleCart_empty {
 	  width: 7%;
 	  }
 	.footer-right {
-	  width: 29%;
+	  width: 82%;
 	}
 	.page-head {
 	  min-height: 346px !important;
@@ -2841,7 +2844,7 @@ a.simpleCart_empty {
 	  font-size: 13px;
 	}  
 	.footer-top {
-	  padding: 20px 0;
+	  padding: 10px 0;
 	} 
 	.order-top {
 	  padding: 20px 0;
@@ -3174,7 +3177,7 @@ a.simpleCart_empty {
 	}
 	.footer-grid ul li.list-one {
 	  background: url(../images/home.png) no-repeat 0px 2px;
-	  padding-left: 30px;
+	  padding: 30px;
 	}
 	.footer-grid:nth-child(4) {
 	  padding: 0;
@@ -3662,7 +3665,7 @@ a.simpleCart_empty {
 }
 @media(max-width:480px){
 	.header-left {
-	  width: 50%;
+	  width: 60%;
 	}
 	.login-section {
 	  width: 28%;
