@@ -13,7 +13,7 @@ class CFRecommender(BaseRecommender):
     """
     Collarative filter recommendation
     """
-    def __init__(self, user_name, recommend_num, flag=True):
+    def __init__(self, user_name, recommend_num=5, flag=True):
         self._user_name = user_name
         self._recommend_num = recommend_num
         self._data = OrderUtils.get_CFR_data(include_all=flag)
@@ -39,5 +39,7 @@ class CFRecommender(BaseRecommender):
         if not recommends:
             sorted_frequency_map = OrderUtils.get_consine_frequency(self._user_name)
             recommends = sorted_frequency_map
-        return recommends
+            [item[0] for item in sorted_frequency_map]
+        # keep the return value corresponding with MostFreqRecommender, just return cousine name
+        return [item[1] for item in recommends]
 
