@@ -65,14 +65,12 @@
 	<div class="container">
 		<div class="top-header">
 				<div class="header-left good-left">
-                                    <p>
-                                        Administrator View:</br>
-                                        Lunch Order System
-                                    </p>
+                	<p>Administrator View: Lunch Order System</p>
 				</div>
 				<div class="login-section">
 				{% if user_login %}
 					<ul>
+					<li><a href="{% url "homepage" %}">Homepage</a></li> | 
 					<li><p> Welcome {{ user_name }}</p> </li> |
 					<li><a href="{% url "admin_logout" %}">Log out</a> </li>
 					</ul>
@@ -82,13 +80,6 @@
 						<li><a href="{% url "register" %}">Register</a> </li>
 					</ul>
 				{% endif %}
-				</div>
-
-				<div class="header-right">
-						<div class="cart box_1">
-							<a href="{% url 'homepage' %}"><h3>HomePage</h3></a>
-							<div class="clearfix"> </div>
-						</div>
 				</div>
 				<div class="clearfix"></div>
 		</div>
