@@ -149,7 +149,6 @@ def personal_info(request):
     for order in order_raw_list:
         order_list.append(order)
     '''
-    
     if user_name:
         return render(request, 'personal.html', {'user_login': True,
                                                  'user_name': user_name,
@@ -158,6 +157,41 @@ def personal_info(request):
     else:
         return HttpResponseRedirect('/login/')
         #return render(request, 'personal.html', {'user_login': True, 'user_name': user_name, 'order_list': order_list})
+
+def personal_change_score(request):
+    '''
+    display the personal information
+    '''
+    user_name = request.session.get('username')
+    order_score = None
+    order_id = None
+    cousine_name = None
+
+    if request.method == "POST":
+        if 'order_score' in request.POST:
+            order_score = request.POST['order_score']
+        if 'order_id' in request.POST:
+            order_id = request.POST['order_id']
+        if 'cousine_name' in request.POST:
+            cousine_name = request.POST['cousine_name']
+
+        print "Changing the order_score to [%s] for order [%s], cousine_name=%s" % (order_score, order_id, cousine_name)
+
+        if order_id and order_score:
+            OrderUtils.change_order_score(order_id, cousine_name, order_score)
+
+    order_dict = OrderUtils.get_last_n_order(1, user_name)
+    history_order_dict = OrderUtils.get_last_n_order(5, user_name)
+    if user_name:
+        return render(request, 'personal.html', {'user_login': True,
+                                                 'user_name': user_name,
+                                                 'order_dict': order_dict,
+                                                 'history_order': history_order_dict})
+    else:
+        return HttpResponseRedirect('/login/')
+
+    return HttpResponseRedirect('/login/')
+
 
 
 def summary(request):

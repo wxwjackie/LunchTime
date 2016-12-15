@@ -148,7 +148,23 @@
 						{% if forloop.first %}
 							<td rowspan="{{values|length}}"> {{value.order_state }}</td>
 						{%endif%}
-						<td> {{value.score}}</td>
+						<td> 
+						   <select id= {{key}} name="cousine_name" onChange="make_score({{key}})">
+								<option>{{ value.score }}</option>
+								{% if value.score == 0 %}
+									 <option>1</option>
+									 <option>2</option>
+									 <option>3</option>
+									 <option>4</option>
+									 <option>5</option>
+									 <option>6</option>
+									 <option>7</option>
+									 <option>8</option>
+									 <option>9</option>
+									 <option>10</option>
+                              {% endif %}
+                           </select>
+						</td>
 					</tr>
 					{% endfor %}					
 		</tr>
@@ -222,6 +238,28 @@ function change_state(){
 	//""<div><select><option value="">{{value.order_state }}</option><option value='United States'>United States</option><option value='United Kingdom'>United Kingdom</option></select></div>"
 	
 }							
+function make_score(key)
+{
+	var sel_item = document.getElementById(key);
+	//var cousine_name =document.getElementsByName("cousine_name");
+	var value = sel_item[sel_item.selectedIndex].value;
+	//var text = sel_item[sel_item.selectedIndex].text;
+	$.ajax({
+		// points to the url where your data will be posted
+		url:'/scorechange/',
+		// post for security reason
+		type: "POST",
+		// data that you will like to return 
+		data: {'order_id': key,
+				'order_score' : value},
+		// what to do when the call is success 
+		success: function(response){},
+		// what to do when the call is complete ( you can right your clean from code here )
+		complete: function(){},
+		// what to do when there is an error
+		error: function(xhr, textStatus, thrownError){}
+	});
+}
 </script>
 </body>
 </html>

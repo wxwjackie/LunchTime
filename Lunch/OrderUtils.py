@@ -24,6 +24,27 @@ def generate_order_id():
     return int(time.time())
 
 
+def change_order_score(order_id, cousine_name, score):
+    '''
+    change the history order score
+    '''
+    if not score:
+        return False
+    order_list = NewOrderRecord.objects.filter(order_serial_no=order_id)
+    if not order_list:
+        print "Failed to get order data from NewOrderRecord"
+        return False
+    for order in order_list:
+        if isinstance(cousine_name, str) and order.cousine.cousine_name == cousine_name:
+            order.score = score
+            order.save()
+        else:
+            order.score = score
+            order.save()
+    order_list = NewOrderRecord.objects.filter(order_serial_no=order_id)
+    for order in order_list:
+        print order.cousine.cousine_name, order.score
+    return True
 def change_order_state(order_id, new_state):
     '''
     change the order state, from
