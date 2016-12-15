@@ -71,6 +71,9 @@
 				<div class="login-section">
 				{% if user_login %}
 					<ul>
+					{% if request.path != '/lunch/' %}
+					<li><a href="{% url "homepage" %}">Homepage</a></li> |
+					{% endif %}
 					<li><a href="{% url "personal_info" %}">Welcome {{ user_name }}</a></li> |
 					<li><a href="{% url "logout" %}">Log out</a> </li>
 					</ul>
@@ -97,27 +100,33 @@
 				<div class="bottom-grids">
 					<div class="col-md-4 bottom-grid text-center">	
 						<div class="btm-clr">
-							<figure class="icon" onclick="recommend('New Dishes')" >
-								<img src="{% static "images/k1.png" %}" alt="" />
-						  	</figure>
+							<a href="{% url "admin_recommend_newdishes" %}">
+								<figure class="icon" >
+									<img src="{% static "images/k1.png" %}" alt="" />
+						  		</figure>
+						  	</a>
 							<h3>New Dishes</h3>
-							<p> New Resturants and Snacks around us.</p>
+							<p> New Resturants and Snacks around us.<p>
 						</div>
 					</div>
 					<div class="col-md-4 bottom-grid btm-gre text-center">
 						<div class="btm-clr">
-							<figure class="icon" onclick="recommend('Popular')" >
-								<img src= "{% static "images/k2.png" %}" alt="" />
-						  </figure>
+							<a href="{% url "admin_recommend_popular" %}">
+								<figure class="icon" >
+									<img src= "{% static "images/k2.png" %}" alt="" />
+						  	</figure>
+						  	</a>
 							<h3>Popular</h3>
 							<p> Frequently ordered Food.</p>
 						</div>
 					</div>
 					<div class="col-md-4 bottom-grid text-center">
 						<div class="btm-clr">
-							<figure class="icon"  onclick="recommend('Special Offer')" >
-								<img src="{% static "images/k3.png" %}" alt="" />
-						  </figure>
+							<a href="{% url "admin_recommend_specialoffer" %}">
+								<figure class="icon" >
+									<img src="{% static "images/k3.png" %}" alt="" />
+						  		</figure>
+						  	</a>
 							<h3>Special Offer</h3>
 							<p> Highly Recommended.</p>
 						</div>
@@ -136,7 +145,7 @@
 
 
 <div class="menu">
-	<div class="container">
+	<div class="container-middle">
 		<div class="our-menu-grids">
 			<!-- here, we use for item in django to get the manu from database -->
 			{% for cousine in manu_list %}
@@ -224,25 +233,6 @@ function plus_test(intid){
 	var intvalue = parseInt($(idname).val());
 	$(idname).val( parseInt(intvalue + 1));
 	//document.write(intvalue);
-}
-function recommend(name)
-{
-	//var text = sel_item[sel_item.selectedIndex].text;
-    $.ajax({
-        // points to the url where your data will be posted
-        url:'/lunch/',
-        //url:{% url 'homepage' %},
-        // post for security reason
-        type: "POST",
-        // data that you will like to return 
-        data: {'name': name},
-        // what to do when the call is success 
-        success: function(response){},
-        // what to do when the call is complete ( you can right your clean from code here )
-        complete: function(){},
-        // what to do when there is an error
-        error: function(xhr, textStatus, thrownError){}
-    });
 }
 function minus_test(intid){
 	var idname = "#product_" + intid;

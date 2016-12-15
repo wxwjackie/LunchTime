@@ -53,6 +53,101 @@ def logout(request):
     del request.session['username']
     return HttpResponseRedirect('/lunch/')
 
+def admin_recommend_newdishes(request):
+    '''
+    load the home page
+    '''
+    manu_list = []
+    #CousineBase.objects.all()
+    recommend_type = "New dishes"  # New Dishes, Popular, Special Offer
+
+    user_name = request.session.get('username')
+    print user_name, recommend_type
+    if user_name:
+        #CFRecommend
+        if recommend_type == "Special Offer":
+            personal_list = CFRecommender(user_name=user_name).recommend()
+        # New dish recommend
+        elif recommend_type == "New Dishes":
+            personal_list = NewDishRecommender(user_name=user_name).recommend()
+        # default use most popular
+        else:
+            personal_list = MostFreqRecommender(user_name=user_name).recommend()
+        print "recommend_type=", recommend_type, "Finally recommend list:", personal_list
+        manu_list = []
+        if not personal_list:
+            manu_list = CousineBase.objects.all()
+        else:
+            manu_list = OrderUtils.get_cousine_by_name(personal_list)
+
+        return render(request, 'index.html', {'user_login': True, 'user_name': user_name, 'manu_list':manu_list})
+    else:
+        manu_list = CousineBase.objects.all()
+        return render(request, 'index.html', {'manu_list': manu_list})
+    
+def admin_recommend_popular(request):
+    '''
+    load the home page
+    '''
+    manu_list = []
+    #CousineBase.objects.all()
+    recommend_type = "Popular"  # New Dishes, Popular, Special Offer
+
+    user_name = request.session.get('username')
+    print user_name, recommend_type
+    if user_name:
+        #CFRecommend
+        if recommend_type == "Special Offer":
+            personal_list = CFRecommender(user_name=user_name).recommend()
+        # New dish recommend
+        elif recommend_type == "New Dishes":
+            personal_list = NewDishRecommender(user_name=user_name).recommend()
+        # default use most popular
+        else:
+            personal_list = MostFreqRecommender(user_name=user_name).recommend()
+        print "recommend_type=", recommend_type, "Finally recommend list:", personal_list
+        manu_list = []
+        if not personal_list:
+            manu_list = CousineBase.objects.all()
+        else:
+            manu_list = OrderUtils.get_cousine_by_name(personal_list)
+
+        return render(request, 'index.html', {'user_login': True, 'user_name': user_name, 'manu_list':manu_list})
+    else:
+        manu_list = CousineBase.objects.all()
+        return render(request, 'index.html', {'manu_list': manu_list})
+    
+def admin_recommend_specialoffer(request):
+    '''
+    load the home page
+    '''
+    manu_list = []
+    #CousineBase.objects.all()
+    recommend_type = "Special Offer"  # New Dishes, Popular, Special Offer
+
+    user_name = request.session.get('username')
+    print user_name, recommend_type
+    if user_name:
+        #CFRecommend
+        if recommend_type == "Special Offer":
+            personal_list = CFRecommender(user_name=user_name).recommend()
+        # New dish recommend
+        elif recommend_type == "New Dishes":
+            personal_list = NewDishRecommender(user_name=user_name).recommend()
+        # default use most popular
+        else:
+            personal_list = MostFreqRecommender(user_name=user_name).recommend()
+        print "recommend_type=", recommend_type, "Finally recommend list:", personal_list
+        manu_list = []
+        if not personal_list:
+            manu_list = CousineBase.objects.all()
+        else:
+            manu_list = OrderUtils.get_cousine_by_name(personal_list)
+
+        return render(request, 'index.html', {'user_login': True, 'user_name': user_name, 'manu_list':manu_list})
+    else:
+        manu_list = CousineBase.objects.all()
+        return render(request, 'index.html', {'manu_list': manu_list})
 
 def home_page(request):
     '''

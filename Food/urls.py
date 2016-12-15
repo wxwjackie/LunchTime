@@ -37,5 +37,8 @@ urlpatterns = [
     url(r'^notifyuser/', views.notify_user, name='notify_user'),
     url(r'^adminadd/', views.admin_add, name='admin_add'),
     url(r'^adminchange/', views.admin_change, name='admin_change'),
-    url(r'^scorechange/', views.personal_change_score, name="personal_change_score")
+    url(r'^scorechange/', views.personal_change_score, name="personal_change_score"),
+	url(r'^recommend_newdishes/', views.admin_recommend_newdishes, name='admin_recommend_newdishes'),
+    url(r'^recommend_popular/', views.admin_recommend_popular, name='admin_recommend_popular'),
+    url(r'^recommend_specialoffer/', views.admin_recommend_specialoffer, name='admin_recommend_specialoffer'),
 ]
