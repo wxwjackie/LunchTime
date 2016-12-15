@@ -31,11 +31,11 @@ def change_order_state(order_id, new_state):
     if (not order_id) or (not new_state):
         return False
 
-    order = NewOrderRecord.objects.get(order_serial_no=order_id)
-    if not order:
+    order_list = NewOrderRecord.objects.filter(order_serial_no=order_id)
+    if not order_list:
         print "Failed to get order data from NewOrderRecord"
         return False
-
+    order = order_list[0]
     print "BEFORE: order_id=[%s]; order_state=[%s]; new_state=[%s]" % (order.order_serial_no, order.order_state, new_state)
     
     if order.order_state != new_state:
