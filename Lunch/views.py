@@ -59,7 +59,7 @@ def admin_recommend_newdishes(request):
     '''
     manu_list = []
     #CousineBase.objects.all()
-    recommend_type = "New dishes"  # New Dishes, Popular, Special Offer
+    recommend_type = "New Dishes"  # New Dishes, Popular, Special Offer
 
     user_name = request.session.get('username')
     print user_name, recommend_type
