@@ -93,6 +93,7 @@
 		<table id="customers">
 		<tr>
 			<th>OrderId</th>
+			<th>Date</th>
 			<th>Order Time</th>
 			<th>LunchName</th>
 			<th>Restaurant Name</th>
@@ -104,6 +105,7 @@
 					<tr>
 						{% if forloop.first %}
 						<td rowspan="{{values|length}}"> {{key}}</td>
+						<td rowspan="{{values|length}}"> {{value.date}}</td>
 						<td rowspan="{{values|length}}"> {{value.order_time }}</td>
 						{%endif%}
 						<td> {{value.cousine.cousine_name }}</td>
@@ -127,6 +129,7 @@
 	<table class="order-table" id="customers">
 		<tr>
 			<th>OrderId</th>
+			<th>Date</th>
 			<th>Order Time</th>
 			<th>LunchName</th>
 			<th>Restaurant Name</th>
@@ -139,6 +142,7 @@
 					<tr>
 						{% if forloop.first %}
 						<td rowspan="{{values|length}}"> {{key}}</td>
+						<td rowspan="{{values|length}}"> {{value.date}}</td>
 						<td rowspan="{{values|length}}"> {{value.order_time }}</td>
 						{%endif%}
 						<td> {{value.cousine.cousine_name }}</td>

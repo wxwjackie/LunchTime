@@ -9,6 +9,7 @@ import time, datetime
 from models import CousineBase, RestaurantBase, NewOrderRecord, SERVICE_TYPE, ORDER_STATE
 from register.models import UserRecord
 import re
+from time import strftime, gmtime
 
 def idenfity_product_id(product_list):
     '''
@@ -75,12 +76,14 @@ def generate_order(user_name, product_list, quantity_list):
     if not product_list or not quantity_list:
         return
     
+    date = strftime("%Y-%m-%d", gmtime())
     order_id = generate_order_id()
     user_ = UserRecord.objects.filter(user_name__exact=user_name)
     i = 0
     for product_id in product_list:
         cousine = CousineBase.objects.get(id=product_id)
-        order = NewOrderRecord(order_serial_no=str(order_id), \
+        order = NewOrderRecord(date=date, \
+                            order_serial_no=str(order_id), \
                            expected_time="Lunch", \
                            order_by_one= list(user_)[0],\
                            cousine=cousine,\

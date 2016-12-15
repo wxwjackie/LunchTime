@@ -138,7 +138,10 @@ class NewOrderRecord(models.Model):
     """
     THe order of a transaction
     """
+    from time import strftime, gmtime
+    date1 = strftime("%Y-%m-%d",gmtime())
     # the placing time of the order
+    date = models.CharField(default=date1, max_length=20)
     order_time = models.TimeField(auto_now_add=True)
     order_serial_no = models.CharField(max_length=25)
     #the expected time the food expected

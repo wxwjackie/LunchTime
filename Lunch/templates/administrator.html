@@ -92,6 +92,7 @@
 		<table id="customers">
 		<tr>
 			<th>OrderId</th>
+			<th>Date</th>
 			<th>Order Time</th>
 			<th>Dish Name</th>
 			<th>Restaurant Name</th>
@@ -104,6 +105,7 @@
 					<tr>
 						{% if forloop.first %}
 						<td rowspan="{{values|length}}"> {{key}}</td>
+						<td rowspan="{{values|length}}"> {{value.date}}</td>
 						<td rowspan="{{values|length}}"> {{value.order_time }}</td>
 						{%endif%}
 						<td> {{value.cousine.cousine_name }}</td>
@@ -131,7 +133,7 @@
                                                     </select>
                                                 </td>
                                                 <td rowspan="{{values|length}}">
-                                                    <a id={{ key }} href="javascript:void(0);" onClick="notify_user({{ key }});return false;">{{ value.order_by_one.email }}</a>
+                                <a id="notifyUser" href="javascript:void(0);" onClick="notify_user({{ key }});return false;">{{ value.order_by_one.email }}</a>
                                                 </td>
 						{%endif%}
 					</tr>
@@ -231,7 +233,7 @@ function change_state(order_id)
 
 function notify_user(order_id)
 {
-    var email = document.getElementById(order_id);
+	var email = document.getElementById("notifyUser").innerHTML;
     var text = "Will send an email to " + email + " to notify the user?";
     var ret = confirm(text);
     if(ret != true) {
