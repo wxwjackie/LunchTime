@@ -200,7 +200,7 @@ def get_cousine_list():
     return list(CousineBase.objects.all())
 
 
-def get_consine_frequency(user_name, include_all=True):
+def get_consine_frequency(user_name, include_all=True, reverse=True):
     '''
     Returen the consine list orderd by frequency
     Used to recommend consine
@@ -226,11 +226,11 @@ def get_consine_frequency(user_name, include_all=True):
             frequency_map[cousine.cousine_name] = 0
 
 
-    sorted_frequency_map = sorted(frequency_map.items(), key=lambda d:d[1], reverse=True)
+    sorted_frequency_map = sorted(frequency_map.items(), key=lambda d:d[1], reverse=reverse)
     return  sorted_frequency_map
 
 
-def get_resturant_frequency(user_name):
+def get_resturant_frequency(user_name, reverse=True):
     '''
     Retruen the resturant Frequency list by user.
     Used to recommend resturant
@@ -245,7 +245,7 @@ def get_resturant_frequency(user_name):
         frequency_map[restaurant.name] += 1
     print frequency_map
 
-    sorted_restarant_map = sorted(frequency_map.items(), key=lambda d:d[1], reverse=True)
+    sorted_restarant_map = sorted(frequency_map.items(), key=lambda d:d[1], reverse=reverse)
     print sorted_restarant_map
     return sorted_restarant_map
 

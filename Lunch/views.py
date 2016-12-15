@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_protect
 from .models import CousineBase, RestaurantBase, NewOrderRecord
 from Recommend.MostFreqRecommender import MostFreqRecommender
 from Recommend.CFRecommender import CFRecommender
+from Recommend.NewDishRecommend import NewDishRecommender
 import OrderUtils
 import EmailUtils
 import Recommend.RecommendUtils as RecommendUtils
@@ -70,10 +71,13 @@ def home_page(request):
         #CFRecommend
         if recommend_type == "Special Offer":
             personal_list = CFRecommender(user_name=user_name).recommend()
+        # New dish recommend
+        elif recommend_type == "New Dishes":
+            personal_list = NewDishRecommender(user_name=user_name).recommend()
         # default use most popular
         else:
             personal_list = MostFreqRecommender(user_name=user_name).recommend()
-        print "Finally recommend list:", personal_list
+        print "recommend_type=", recommend_type, "Finally recommend list:", personal_list
         manu_list = []
         if not personal_list:
             manu_list = CousineBase.objects.all()
