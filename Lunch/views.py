@@ -11,7 +11,7 @@ import EmailUtils
 import Recommend.RecommendUtils as RecommendUtils
 import json
 from AdminUtils import create_new_cousine
-from PIL import Image
+
 
 @csrf_protect
 def login(request):
