@@ -267,7 +267,8 @@ def notify_user(request):
         if not order_id or not email:
             return
 
-        order = NewOrderRecord.objects.get(order_serial_no=order_id)
+        order_lst = NewOrderRecord.objects.filter(order_serial_no=order_id)
+        order = order_lst[0]
         state = order.order_state
         user = order.order_by_one
         print "Notifying the user [%s]; order state is [%s]" % (email, state)
