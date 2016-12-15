@@ -35,4 +35,6 @@ urlpatterns = [
     url(r'^summary/', views.summary, name='summary'),
     url(r'^orderstatechange/', views.order_state_change, name='order_state_change'),
     url(r'^notifyuser/', views.notify_user, name='notify_user'),
+    url(r'^adminadd/', views.admin_add, name='admin_add'),
+    url(r'^adminchange/', views.admin_change, name='admin_change'),
 ]

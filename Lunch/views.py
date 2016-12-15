@@ -261,7 +261,7 @@ def notify_user(request):
             order_id = request.POST['order_id']
         if 'email' in request.POST:
             email = request.POST['email']
-        
+
         if not order_id or not email:
             return
 
@@ -269,7 +269,23 @@ def notify_user(request):
         state = order.order_state
         user = order.order_by_one
         print "Notifying the user [%s]; order state is [%s]" % (email, state)
-        
+
         EmailUtils.notify_order_state_to_user(email, user, state)
 
     return HttpResponseRedirect('/administrator/')
+
+
+def admin_add(request):
+    """
+    Add cousine by admin
+    """
+    form = LoginForm()
+    print "GET"
+    return render(request, 'adminadd.html', {'form':form})
+
+
+def admin_change(request):
+    """
+    Modify cousine by admin
+    """
+
