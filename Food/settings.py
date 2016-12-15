@@ -25,7 +25,7 @@ SECRET_KEY = '0^$c6wl0^#+xex%^ofikag6wi#+-04(o7hdz5^hjkqrbvx2oux'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 MEDIA_ROOT = 'Lunch/static/dish_images/'
 # Application definition
