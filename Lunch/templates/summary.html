@@ -1,0 +1,238 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+	<title>Home</title>
+			<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+			<link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" media="all" />
+	<!-- for-mobile-apps -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="Favorites Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+		Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!-- //for-mobile-apps -->	
+	<!-- js -->
+	<script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+	<!-- js -->
+	<!-- cart -->
+		<script src=" {% static "js/simpleCart.min.js" %}"> </script>
+	<!-- cart -->
+	<!-- start-smoth-scrolling -->
+		<script type="text/javascript" src="{% static "js/move-top.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/easing.js" %}"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+			
+			function getCookie(name) {
+		        var cookieValue = null;
+		        if (document.cookie && document.cookie != '') {
+		            var cookies = document.cookie.split(';');
+		            for (var i = 0; i < cookies.length; i++) {
+		                var cookie = jQuery.trim(cookies[i]);
+		                // Does this cookie string begin with the name we want?
+		                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+		                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                    break;
+		                }
+		            }
+		        }
+		        return cookieValue;
+		    }
+
+
+		    $.ajaxSetup({
+		      beforeSend: function(xhr, settings){ 
+
+		          xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));              //request头需要添加csrftoken,告诉服务器，我是个好yin哪，我是正常访问者
+		      }
+		    });
+		</script>
+	<!-- start-smoth-scrolling -->
+	<!-- manu -->
+		 <script type="text/javascript" src="{% static "js/wan-spinner.js" %}"></script>
+
+</head>
+<body>
+<!-- header -->
+<div class="admin-header">
+	<div class="container">
+		<div class="top-header">
+				<div class="header-left good-left">
+					<p>Admin View: Lunch Order System</p>
+				</div>
+				<div class="login-section">
+				{% if user_login %}
+					<ul>
+					<li><p> Welcome {{ user_name }}</p> </li> |
+					<li><a href="{% url "logout" %}">Log out</a> </li>
+					</ul>
+				{% else %}
+					<ul>
+						<li><a href="{% url "login" %}">Login</a> </li> |
+						<li><a href="{% url "register" %}">Register</a> </li>
+					</ul>
+				{% endif %}
+				</div>
+
+				<div class="header-right">
+						<div class="cart box_1">
+							<a href="{% url 'homepage' %}"><h3>HomePage</h3></a>
+							<div class="clearfix"> </div>
+						</div>
+				</div>
+				<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+
+<div class="personal_display">
+<div class="history-order">
+		<p>Today's Order Summary</p>
+		<table id="customers">
+		<tr>
+			<th>OrderId</th>
+			<th>Order Time</th>
+			<th>LunchName</th>
+			<th>Restaurant Name</th>
+			<th>Quantity</th>
+			<th>OrderBy</th>
+			<th>State</th>
+			
+		</tr>
+		{% for key, values in order_dict.items %}
+					{% for value in values %} <!-- key is serial no, value is objects list -->
+					<tr>
+						{% if forloop.first %}
+						<td rowspan="{{values|length}}"> {{key}}</td>
+						<td rowspan="{{values|length}}"> {{value.order_time }}</td>
+						{%endif%}
+						<td> {{value.cousine.cousine_name }}</td>
+						<td> {{value.cousine.restaurant_name}}</td>
+						<td> {{value.quantity }}</td>
+						{% if forloop.first %}
+							<td rowspan="{{values|length}}"> {{value.order_by_one.user_name }}</td>
+							<td rowspan="{{values|length}}"> <a href="javascript:void(0)" onclick="change_state()">{{value.order_state }}</a>
+							</td>
+						{%endif%}
+					</tr>
+					{% endfor %}					
+		</tr>
+		{% endfor %}
+	</table>
+
+	<div class="clearfix"></div>
+	</br>
+	</br>
+
+	<p>History Orders</p>
+	<table class="order-table" id="customers">
+		<tr>
+			<th>OrderId</th>
+			<th>Order Time</th>
+			<th>LunchName</th>
+			<th>Restaurant Name</th>
+			<th>Quantity</th>
+			<th>OrderBy</th>
+			<th>State</th>
+		</tr>
+		{% for key, values in history_order.items %}
+					{% for value in values %} <!-- key is serial no, value is objects list -->
+					<tr>
+						{% if forloop.first %}
+						<td rowspan="{{values|length}}"> {{key}}</td>
+						<td rowspan="{{values|length}}"> {{value.order_time }}</td>
+						{%endif%}
+						<td> {{value.cousine.cousine_name }}</td>
+						<td> {{value.cousine.restaurant_name}}</td>
+						<td> {{value.quantity }}</td>
+						{% if forloop.first %}
+							<td rowspan="{{values|length}}"> {{value.order_by_one.user_name }}</td>
+							<td rowspan="{{values|length}}"> {{value.order_state }}</td>
+						{%endif%}
+					</tr>
+					{% endfor %}					
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+<div class="history-order">
+	<p>UserName: {{user_name}}</p>
+	<div class="basic-personal-info">
+	<table>
+		<tr>
+			<th>Item</th>
+			<th>Contents</th>
+		</tr>
+		<tr>
+			<td>
+			Email:
+			</td>
+			<td>
+			xxx@infinera.com
+			</td>
+		</tr>
+		<tr>
+		<td>Last Login</td><td>xx.xxx.xxx</td>
+		</tr>
+		<tr>
+		<td>Personal</td><td><a href="{% url "personal_info" %}">Go to personal view</a></td>
+		</tr>
+		<tr>
+		<td>Personal</td><td><a href="{% url "personal_info" %}">Send Email</a></td>
+		</tr>
+	</table>
+	</div>
+
+</div>
+</div>
+<div class="footer-top">
+	<div class="container">
+		<div class="col-md-3 footer-grid">
+			<h4>AD</h4>
+			<p>AD   Co-op<span>Tel:  1 1 0</span></p>
+		</div>
+		
+		<div class="col-md-3 footer-grid">
+			<h4>ORDERS</h4>
+			<p>MONDAY - FRIDAY<span>8 : 00 - 10 : 00</span></p>
+		</div>
+
+		<div class="col-md-3 footer-grid">
+			<h4>ADDRESS</h4>
+			<ul>
+				<li class="list-one">Order when you have meetings</li>
+				<li class="list-two"><a href="mailto:xxx@infinera.com">xxx@infinera.com</a></li>
+			</ul>
+		</div>
+		<!--  <div class="clearfix"></div> -->
+	</div>
+</div>
+
+<!-- //footer-top -->
+<!-- footer -->
+<div class="footer">
+	<div class="container">
+		<div class="footer-right">
+			<p>Copyright &copy; 2016.Infinera Technology(Beijing). All rights reserved. <a href="http://www.infinera.com" target="_blank" title="CSIM ">CSIM Support</a></p>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+
+<script>
+function change_state(){
+	$(this).innerHTML="a";
+	//""<div><select><option value="">{{value.order_state }}</option><option value='United States'>United States</option><option value='United Kingdom'>United Kingdom</option></select></div>"
+	
+}							
+</script>
+</body>
+</html>

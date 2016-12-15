@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+	<title>Home</title>
+			<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+			<link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" media="all" />
+	<!-- for-mobile-apps -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="Favorites Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+		Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!-- //for-mobile-apps -->	
+	<!-- js -->
+	<script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+	<!-- js -->
+	<!-- cart -->
+		<script src=" {% static "js/simpleCart.min.js" %}"> </script>
+	<!-- cart -->
+	<!-- start-smoth-scrolling -->
+		<script type="text/javascript" src="{% static "js/move-top.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/easing.js" %}"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+			
+			function getCookie(name) {
+		        var cookieValue = null;
+		        if (document.cookie && document.cookie != '') {
+		            var cookies = document.cookie.split(';');
+		            for (var i = 0; i < cookies.length; i++) {
+		                var cookie = jQuery.trim(cookies[i]);
+		                // Does this cookie string begin with the name we want?
+		                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+		                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                    break;
+		                }
+		            }
+		        }
+		        return cookieValue;
+		    }
+
+
+		    $.ajaxSetup({
+		      beforeSend: function(xhr, settings){ 
+
+		          xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));              //request头需要添加csrftoken,告诉服务器，我是个好yin哪，我是正常访问者
+		      }
+		    });
+		</script>
+	<!-- start-smoth-scrolling -->
+	<!-- manu -->
+		 <script type="text/javascript" src="{% static "js/wan-spinner.js" %}"></script>
+
+</head>
+<body>
+<!-- header -->
+<div class="header">
+	<div class="container">
+		<div class="top-header">
+				<div class="header-left good-left">
+					<p>Infinera Beijing Lunch Order System</p>
+				</div>
+				<div class="login-section">
+				{% if user_login %}
+					<ul>
+					<li><a href="{% url "personal_info" %}">Welcome {{ user_name }}</a></li> |
+					<li><a href="{% url "logout" %}">Log out</a> </li>
+					</ul>
+				{% else %}
+					<ul>
+						<li><a href="{% url "login" %}">Login</a> </li> |
+						<li><a href="{% url "register" %}">Register</a> </li>
+					</ul>
+				{% endif %}
+				</div>
+				<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+
+<!-- //header -->
+<div class="copyrights">Collect from <a href="#" >Infinera CSIM Dev</a></div>
+<!-- banner -->
+<div class="banner-slider">
+	<div class="clearfix"></div>
+	<!-- banner-bottom -->
+		<div class="banner-bottom">
+			<div class="container">
+				<div class="bottom-grids">
+					<div class="col-md-4 bottom-grid text-center">	
+						<div class="btm-clr">
+							<figure class="icon">
+								<img src="{% static "images/k1.png" %}" alt="" />
+						  </figure>
+							<h3>New Dishes</h3>
+							<p> New Resturants and Snacks around us.</p>
+						</div>
+					</div>
+					<div class="col-md-4 bottom-grid btm-gre text-center">
+						<div class="btm-clr">
+							<figure class="icon">
+								<img src= "{% static "images/k2.png" %}" alt="" />
+						  </figure>
+							<h3>Popular</h3>
+							<p> Frequently ordered Food.</p>
+						</div>
+					</div>
+					<div class="col-md-4 bottom-grid text-center">
+						<div class="btm-clr">
+							<figure class="icon">
+								<img src="{% static "images/k3.png" %}" alt="" />
+						  </figure>
+							<h3>Special Offer</h3>
+							<p> Highly Recommended.</p>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+	<!-- //banner-bottom -->
+</div>
+<!-- //banner -->
+</br>
+</br></br></br></br></br>
+<div class="menu">
+	<div class="container">
+		<div class="our-menu-grids">
+		<h3 ><font color="#00FF00" style="font-weight:bold">Order has been submitted Successfully!</font></h3>
+		</div>
+	</div>
+</div>
+
+<!-- <div class="order"><a href="{% url "checkout" %}">CHECK OUT</a></div> -->
+</br>
+</br>
+<!-- footer-top -->
+<div class="footer-top">
+	<div class="container">
+		<div class="col-md-3 footer-grid">
+			<h4>AD</h4>
+			<p>AD   Co-op<span>Tel:  1 1 0</span></p>
+		</div>
+		
+		<div class="col-md-3 footer-grid">
+			<h4>ORDERS</h4>
+			<p>MONDAY - FRIDAY<span>8 : 00 - 10 : 00</span></p>
+		</div>
+
+		<div class="col-md-3 footer-grid">
+			<h4>ADDRESS</h4>
+			<ul>
+				<li class="list-one">Order when you have meetings</li>
+				<li class="list-two"><a href="mailto:xxx@infinera.com">xxx@infinera.com</a></li>
+			</ul>
+		</div>
+		<!--  <div class="clearfix"></div> -->
+	</div>
+</div>
+
+<!-- //footer-top -->
+<!-- footer -->
+<div class="footer">
+	<div class="container">
+		<div class="footer-right">
+			<p>Copyright &copy; 2016.Infinera Technology(Beijing). All rights reserved. <a href="http://www.infinera.com" target="_blank" title="CSIM ">CSIM Support</a></p>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+
+<!-- //footer -->
+<!-- smooth scrolling -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+		/*
+			var defaults = {
+			containerID: 'toTop', // fading element id
+			containerHoverID: 'toTopHover', // fading element hover id
+			scrollSpeed: 1200,
+			easingType: 'linear' 
+			};
+		*/								
+		$().UItoTop({ easingType: 'easeOutQuart' });
+		});
+	</script>
+	<a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+<!-- //smooth scrolling -->
+<script type="text/javascript">
+function plus_test(intid){
+	var idname = "#product_" + intid
+	var intvalue = parseInt($(idname).val());
+	$(idname).val( parseInt(intvalue + 1));
+	//document.write(intvalue);
+}
+function minus_test(intid){
+	var idname = "#product_" + intid;
+	var intvalue = parseInt($(idname).val());
+	if (intvalue > 0){
+		$(idname).val( parseInt(intvalue - 1));
+	}
+}
+function checkout(){
+	var _list_product = [];
+	var _list_quantity = [];
+	$(".product_item").each(function(){
+		var quantity = parseInt($(this).val())
+		if (quantity <= 0)
+			return;
+		_list_product.push($(this).attr("id"));
+		_list_quantity.push($(this).val());
+	})
+	
+	if (_list_product.length == 0){
+		
+		document.write("No order")
+		return;
+	}else{
+		var data = {"product_list[]":_list_product , "quantity_list[]":_list_quantity}
+		jQuery.post('{% url 'checkout'%}', data, function(res){
+			if (res['result']){
+				window.location.href= '{% url 'login'%}'
+			}else{
+				window.location.href= '{% url 'register'%}'
+			}
+		})
+	}
+	//var list = $("a[class='product_item']").val();
+	
+	
+}
+</script>
+</body>
+</html>

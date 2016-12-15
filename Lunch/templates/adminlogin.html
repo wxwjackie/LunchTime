@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<head>
+    <title>Administrator Login</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="CSIM">
+    <link href=" {% static "css/bootstrap.css" %}" rel="stylesheet"/>
+    <link href=" {% static "css/style.css" %}" rel="stylesheet" type="text/css" media="all"/>
+</head>
+
+<div class="infineralogo">
+    <img src="{% static "images/InfineraLogo.jpg" %}"/>
+</div>
+
+<body>
+    <div class="login">
+        <div class="container">
+            <div class="login-grids">
+                <div class="col-md-6 log">
+                    <h3>ADMIN LOGIN</h3>
+                    <div class="strip"></div>
+                    <p>
+                    Administrator user has more priviledges to perform the management of meal order service.
+                    Please contact to the webservice developers to be an administrator user,
+                    or if the username and password are forgotten.
+                    </p>
+                    <form method='post'>
+                        {% csrf_token %}
+                        {% if password_is_wrong %}
+                            <h5>ERROR, refill username & password.</h5>
+                            </br>
+                        {% endif %}
+                        {% for item in form %}
+                            <h5><b>{{ item.label_tag }}</b></h5>
+                            {{ item }}
+                        {% endfor %}
+                        <input type="submit" value="LOGIN">
+                    </form>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</body>

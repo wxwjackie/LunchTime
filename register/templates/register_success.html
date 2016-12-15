@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+<title>User Register</title>
+<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+<link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" media="all" />
+</head> 
+<body>
+<div class="infineralogo">
+<img src="{% static "images/InfineraLogo.jpg" %}" />
+</div>
+
+<div class="registration-form">
+	<h4>Register Successfully!</h4>
+	<a href="{% url "login" %}">Go to login</a>
+</div>
+</body>
+</html>

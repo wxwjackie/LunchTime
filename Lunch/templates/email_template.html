@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+	<title>Home</title>
+			<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+			<link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" media="all" />
+	<!-- for-mobile-apps -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="Favorites Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+		Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!-- //for-mobile-apps -->	
+	<!-- js -->
+	<script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+	<!-- js -->
+	<!-- cart -->
+		<script src=" {% static "js/simpleCart.min.js" %}"> </script>
+	<!-- cart -->
+	<!-- start-smoth-scrolling -->
+		<script type="text/javascript" src="{% static "js/move-top.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/easing.js" %}"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+			
+			function getCookie(name) {
+		        var cookieValue = null;
+		        if (document.cookie && document.cookie != '') {
+		            var cookies = document.cookie.split(';');
+		            for (var i = 0; i < cookies.length; i++) {
+		                var cookie = jQuery.trim(cookies[i]);
+		                // Does this cookie string begin with the name we want?
+		                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+		                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                    break;
+		                }
+		            }
+		        }
+		        return cookieValue;
+		    }
+
+
+		    $.ajaxSetup({
+		      beforeSend: function(xhr, settings){ 
+
+		          xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));              //request头需要添加csrftoken,告诉服务器，我是个好yin哪，我是正常访问者
+		      }
+		    });
+		</script>
+	<!-- start-smoth-scrolling -->
+	<!-- manu -->
+		 <script type="text/javascript" src="{% static "js/wan-spinner.js" %}"></script>
+
+</head>
+<body>
+<!-- header -->
+
+
+<div class="history-order">
+		<p>Today's Order Summary</p>
+		<table id="customers">
+		<tr>
+			<th>OrderId</th>
+			<th>Order Time</th>
+			<th>LunchName</th>
+			<th>Restaurant Name</th>
+			<th>Quantity</th>
+			<th>OrderBy</th>
+			<th>State</th>
+			
+		</tr>
+		{% for key, values in order_dict.items %}
+					{% for value in values %} <!-- key is serial no, value is objects list -->
+					<tr>
+						{% if forloop.first %}
+						<td rowspan="{{values|length}}"> {{key}}</td>
+						<td rowspan="{{values|length}}"> {{value.order_time }}</td>
+						{%endif%}
+						<td> {{value.cousine.cousine_name }}</td>
+						<td> {{value.cousine.restaurant_name}}</td>
+						<td> {{value.quantity }}</td>
+						{% if forloop.first %}
+							<td rowspan="{{values|length}}"> {{value.order_by_one.user_name }}</td>
+							<td rowspan="{{values|length}}"> <a href="javascript:void(0)" onclick="change_state()">{{value.order_state }}</a>
+							</td>
+						{%endif%}
+					</tr>
+					{% endfor %}					
+		</tr>
+		{% endfor %}
+	</table>
+
+	<div class="clearfix"></div>
+	</br>
+	</br>
+
+</div>
+
+</body>
+</html>
