@@ -97,16 +97,16 @@
 				<div class="bottom-grids">
 					<div class="col-md-4 bottom-grid text-center">	
 						<div class="btm-clr">
-							<figure class="icon">
+							<figure class="icon" onclick="recommend('New Dishes')" >
 								<img src="{% static "images/k1.png" %}" alt="" />
-						  </figure>
+						  	</figure>
 							<h3>New Dishes</h3>
 							<p> New Resturants and Snacks around us.</p>
 						</div>
 					</div>
 					<div class="col-md-4 bottom-grid btm-gre text-center">
 						<div class="btm-clr">
-							<figure class="icon">
+							<figure class="icon" onclick="recommend('Popular')" >
 								<img src= "{% static "images/k2.png" %}" alt="" />
 						  </figure>
 							<h3>Popular</h3>
@@ -115,7 +115,7 @@
 					</div>
 					<div class="col-md-4 bottom-grid text-center">
 						<div class="btm-clr">
-							<figure class="icon">
+							<figure class="icon"  onclick="recommend('Special Offer')" >
 								<img src="{% static "images/k3.png" %}" alt="" />
 						  </figure>
 							<h3>Special Offer</h3>
@@ -225,7 +225,26 @@ function plus_test(intid){
 	$(idname).val( parseInt(intvalue + 1));
 	//document.write(intvalue);
 }
-
+function recommend(name)
+{
+    alert(name)
+	//var text = sel_item[sel_item.selectedIndex].text;
+    $.ajax({
+        // points to the url where your data will be posted
+        url:'/lunch/',
+        //url:{% url 'homepage' %},
+        // post for security reason
+        type: "POST",
+        // data that you will like to return 
+        data: {'name': name},
+        // what to do when the call is success 
+        success: function(response){},
+        // what to do when the call is complete ( you can right your clean from code here )
+        complete: function(){},
+        // what to do when there is an error
+        error: function(xhr, textStatus, thrownError){}
+    });
+}
 function minus_test(intid){
 	var idname = "#product_" + intid;
 	var intvalue = parseInt($(idname).val());

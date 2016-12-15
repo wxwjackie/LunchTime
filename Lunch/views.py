@@ -56,9 +56,13 @@ def home_page(request):
     '''
     manu_list = []
     #CousineBase.objects.all()
-
+    recommend_type = ""
+    if request.method == "POST":
+        if 'name' in request.POST:
+            recommend_type = request.POST['name']
+    
     user_name = request.session.get('username')
-
+    print user_name, recommend_type
     if user_name:
         personal_list = MostFreqRecommender(user_name=user_name).recommend()
         manu_list = []
