@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from .models import CousineBase, RestaurantBase, NewOrderRecord
 from Recommend.MostFreqRecommender import MostFreqRecommender
+from Recommend.CFRecommender import CFRecommender
 import OrderUtils
 import EmailUtils
 import Recommend.RecommendUtils as RecommendUtils
@@ -58,7 +59,7 @@ def home_page(request):
     '''
     manu_list = []
     #CousineBase.objects.all()
-    recommend_type = ""
+    recommend_type = ""  # New Dishes, Popular, Special Offer
     if request.method == "POST":
         if 'name' in request.POST:
             recommend_type = request.POST['name']
@@ -66,7 +67,13 @@ def home_page(request):
     user_name = request.session.get('username')
     print user_name, recommend_type
     if user_name:
-        personal_list = MostFreqRecommender(user_name=user_name).recommend()
+        #CFRecommend
+        if recommend_type == "Special Offer":
+            personal_list = CFRecommender(user_name=user_name).recommend()
+        # default use most popular
+        else:
+            personal_list = MostFreqRecommender(user_name=user_name).recommend()
+        print "Finally recommend list:", personal_list
         manu_list = []
         if not personal_list:
             manu_list = CousineBase.objects.all()
@@ -74,11 +81,9 @@ def home_page(request):
             manu_list = OrderUtils.get_cousine_by_name(personal_list)
 
         return render(request, 'index.html', {'user_login': True, 'user_name': user_name, 'manu_list':manu_list})
-        #return render(request, 'index.html', {'user_login': True, 'user_name': user_name, 'formset':formset})
     else:
         manu_list = CousineBase.objects.all()
         return render(request, 'index.html', {'manu_list': manu_list})
-        #return render(request, "index.html", {'formset': formset})
 
 
 def checkout(request):
@@ -318,7 +323,6 @@ def admin_add(request):
         form = CousineRegForm()
         print "GET"
         return render(request, 'adminadd.html', {'form':form})
-
 
 
 def admin_change(request):

@@ -132,6 +132,7 @@
 			<th>Restaurant Name</th>
 			<th>Quantity</th>
 			<th>State</th>
+			<th>Score</th>
 		</tr>
 		{% for key, values in history_order.items %}
 					{% for value in values %} <!-- key is serial no, value is objects list -->
@@ -143,9 +144,11 @@
 						<td> {{value.cousine.cousine_name }}</td>
 						<td> {{value.cousine.restaurant_name}}</td>
 						<td> {{value.quantity }}</td>
+						
 						{% if forloop.first %}
 							<td rowspan="{{values|length}}"> {{value.order_state }}</td>
 						{%endif%}
+						<td> {{value.score}}</td>
 					</tr>
 					{% endfor %}					
 		</tr>

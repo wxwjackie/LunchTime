@@ -147,6 +147,7 @@ class NewOrderRecord(models.Model):
     cousine = models.ForeignKey(CousineBase)
     quantity = models.IntegerField()
     order_state = models.CharField(max_length=25, choices=ORDER_STATE)
+    score = models.IntegerField(default=0, help_text="Please give a score in [1,10]")
 
     def __str__(self):
         return self.order_serial_no
