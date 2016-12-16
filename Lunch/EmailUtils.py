@@ -44,8 +44,10 @@ def notify_order_state_to_user(mail_to, user, order_state):
     
     content = "Dear %s,<br/><br/>" % user
     wel_str = """
-            Welcome to use the automatic Meal Order System.
-            Vist the website http://10.220.43.58:8000/lunch/ to have a try.
+            Our Happy Lunch Order System is coming.<br/>
+            Welcome to visit the amazing website http://10.220.43.58:8000/lunch/ to enjoy.<br/>
+            Have a try, and vote for us!<br/>
+            Your future convenience is depending on your hands!<br/>
     """
 
     if order_state == "Submitted":
