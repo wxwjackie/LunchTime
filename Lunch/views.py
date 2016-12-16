@@ -36,9 +36,8 @@ def login(request):
                 #return render(request, 'index.html', {'user_login': True, 'user_name':user_name})
             else:
                 #still in this page
-                #return render(request, 'index.html', {'form':form, 'password_is_wrong': True})
-                return render_to_response('login.html', {'form':form, 'password_is_wrong': True}, \
-                                          RequestContext(request))
+                return render(request, 'login.html', {'form':form, 'password_is_wrong': True})
+                #return render_to_response('login.html', {'form':form, 'password_is_wrong': True}, RequestContext(request))
     else:
         #this is get
         form = LoginForm()
