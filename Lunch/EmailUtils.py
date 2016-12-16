@@ -60,5 +60,5 @@ def notify_order_state_to_user(mail_to, user, order_state):
     if content:
         content = content + "<br/><br/>Best regards,<br/>Happy Lunch Team"
 
-    mail_obj = EMAILGENERATOR({"SmtpServer": "10.100.98.82", "FromAddr": "xwang@infinera.com", "ToAddr": mail_to, "CcAddr": "", "Subject": subjuct})
+    mail_obj = EMAILGENERATOR({"SmtpServer": "10.100.98.82", "FromAddr": "JuanZhang@infinera.com", "ToAddr": mail_to, "CcAddr": "", "Subject": subjuct})
     mail_obj.send_email(content)
