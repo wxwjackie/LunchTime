@@ -1,6 +1,6 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
-from .LunchLoginForm import LoginForm, CousineRegForm
+from .LunchLoginForm import LoginForm, CousineRegForm, RestaurantRegForm
 from register.models import UserRecord, AdminUserRecord
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
@@ -12,7 +12,7 @@ import OrderUtils
 import EmailUtils
 import Recommend.RecommendUtils as RecommendUtils
 import json
-from AdminUtils import create_new_cousine
+from AdminUtils import create_new_cousine, create_new_restaurant
 
 
 @csrf_protect
@@ -420,42 +420,87 @@ def notify_user(request):
     return HttpResponseRedirect('/administrator/')
 
 
+@csrf_protect
 def admin_add(request):
+    '''
+    Add restaurant by adnmin
+    '''
+    user_name = request.session.get('admin_username')
+    if not user_name:
+        return HttpResponseRedirect('/adminlogin/')
+
+
+    if request.method == "POST":
+        form = RestaurantRegForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            addr = form.cleaned_data['address']
+            phone = form.cleaned_data['phone']
+            rest_type = form.cleaned_data['type']
+            print name
+            create_new_restaurant(name, addr, phone, rest_type)
+        else:
+            print "Wrong input"
+            return render(request, 'adminadd.html', {'restaurant_form': form})
+
+        # create the obj
+        return HttpResponseRedirect('/administrator/')
+
+    else:
+        restaurant_form = RestaurantRegForm()
+        # print "GET"
+        return render(request,
+                      'adminadd.html',
+                      {'restaurant_form': restaurant_form})
+
+
+def admin_add_next(request):
     """
     Add cousine by admin
     """
+    user_name = request.session.get('admin_username')
+    if not user_name:
+        return HttpResponseRedirect('/adminlogin/')
 
     if request.method == "POST":
-        print request.FILES
-        if 'cousine_image' in request.FILES:
-            image = request.FILES["cousine_image"]
-        else:
-            image = None
 
+        image = None
+        print request.FILES
+        
+        if 'picture' in request.FILES:
+            image = request.FILES["picture"]
+        print image
+        if not image:
+            raise Exception
+
+        print request.POST
+        
         form = CousineRegForm(request.POST)
         if form.is_valid():
             cousine_name = form.cleaned_data['cousine_name']
-            cousine_restaurant = form.cleaned_data['cousine_restaurant']
+            cousine_restaurant = form.cleaned_data['restaurant_name']
             cousine_price = form.cleaned_data['cousine_price']
             service_time = form.cleaned_data['service_time']
             create_new_cousine(cousine_name=cousine_name,
                                cousine_restaurant=cousine_restaurant,
+                               service_time=service_time,
                                cousine_price=cousine_price,
-                               cousine_image=image,
-                               service_time=service_time)
-
+                               cousine_image=image)
         else:
+            print "Form is bad."
             raise Exception
 
-
         # create the obj
-        return HttpResponseRedirect('/registersuccess/')
+        return HttpResponseRedirect('/administrator/')
 
 
     else:
-        form = CousineRegForm()
+        cuisine_form = CousineRegForm()
         print "GET"
-        return render(request, 'adminadd.html', {'form':form})
+        return render(request,
+                      'adminaddnext.html',
+                      {'cuisine_form': cuisine_form})
+
 
 
 def admin_change(request):

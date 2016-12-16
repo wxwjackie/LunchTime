@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <title>Add Menu</title>
+    <meta name="description" content="">
+    <meta name="author" content="CSIM">
+    <link href=" {% static "css/bootstrap.css" %}" rel="stylesheet">
+    <link href=" {% static "css/style.css" %}" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+</head>
+
+<div class="infineralogo">
+    <img src="{% static "images/InfineraLogo.jpg" %}" />
+</div>
+
+<body>
+<div class="login">
+    <div class="container">
+        <div class="login-grids">
+            <div class="col-md-6 log">
+                <h3>Restaurant & Cuisine</h3>
+                <div class="strip"></div>
+                <p>
+                Please specify the restaurant & cuisine information:
+                </p>
+                <form method='post' enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for item in cuisine_form %}
+                        {% if item.label == "Cuisine Price" or item.label == "Picture" %}
+                            <br/><br/><br/>
+                        {% endif %}
+                        <h5><b>{{ item.label_tag }}</b></h5>
+                        {{ item }}
+                    {% endfor %}
+                    <br/><br/>
+                    <input type="submit" value="ADD">
+                </form>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+
+      // Only process image files.
+      if (!f.type.match('image.*')) {
+        continue;
+      }
+
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');
+          document.getElementById('list').insertBefore(span, null);
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+  }
+
+  document.getElementById('getFile').addEventListener('change', handleFileSelect, false);
+</script>
+
+</body>

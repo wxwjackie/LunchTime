@@ -11,42 +11,31 @@
 </head>
 
 <div class="infineralogo">
-	<img src="{% static "images/InfineraLogo.jpg" %}" />
+    <img src="{% static "images/InfineraLogo.jpg" %}" />
 </div>
 
 <body>
 <div class="login">
     <div class="container">
         <div class="login-grids">
-
             <div class="col-md-6 log">
-                <h3>Restaurant</h3>
+                <h3>Restaurant & Cuisine</h3>
                 <div class="strip"></div>
                 <p>
-                Please specify the restaurant infomation:
+                Please specify the restaurant & cuisine information:
                 </p>
                 <form method='post'>
-		    {% for item in form %}
-		        <h5><b>{{ item.label_tag }}</b></h5>
-		    {{ item }}
-		    {% endfor %}
-		    <input type="submit" value="LOGIN">
-		</form>
-	    </div>
-
-            <div class="col-md-6 login-right">
-                <h3>Cuisine</h3>
-                <div class="strip"></div>
-		<p>
-                Please specify the cuisine infomation:
-                </p>
-                <form method='post'>
-		    {% for item in form %}
-		        <h5><b>{{ item.label_tag }}</b></h5>
-		    {{ item }}
-		    {% endfor %}
-		    <input type="submit" value="LOGIN">
-		</form>
+                    {% csrf_token %}
+                    {% for item in restaurant_form %}
+                        <h5><b>{{ item.label_tag }}</b></h5>
+                        {{ item }}
+                        <!--
+                        <input type="text" id={{ item.label }}>
+                        -->
+                    {% endfor %}
+                    <br/><br/><br/>
+                    <input type="submit" value="ADD">
+                </form>
             </div>
 
             <div class="clearfix"></div>

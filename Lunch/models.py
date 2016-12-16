@@ -73,7 +73,7 @@ class CousineBase(models.Model):
     #service time
     service_time = models.CharField(max_length=25, choices=SERVICE_TYPE)
     # picture path
-    picture = models.CharField(max_length=512, default="null")
+    picture = models.ImageField(upload_to='restaurant/%Y/%m/%d', blank=True, null=True)
     
     def __str__(self):
         return self.cousine_name
