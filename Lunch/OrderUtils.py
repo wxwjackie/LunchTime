@@ -265,7 +265,7 @@ def get_CFR_data(include_all=False):
         if not user_data:
             continue
         total = sum([value[1] for value in user_data])
-        print user.user_name, total, user_data
+        # print user.user_name, total, user_data
         for cousine, times in user_data:
             data[user.user_name][cousine] = times / (total + 0.0)
 

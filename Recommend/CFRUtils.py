@@ -104,7 +104,7 @@ def get_recommendation(perfs, person, dist_fun=pearson_distance):
     '''
     totals, sim_sums = {}, {}
     tops = top_matches(perfs, person, n=0, dist_fun=dist_fun)
-    print tops
+    # print tops
     for (sim, other) in tops:
         if sim <= 0: continue
         for item in perfs[other]:
