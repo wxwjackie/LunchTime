@@ -133,7 +133,7 @@
                                                     </select>
                                                 </td>
                                                 <td rowspan="{{values|length}}">
-                                <a id="notifyUser" href="javascript:void(0);" onClick="notify_user({{ key }});return false;">{{ value.order_by_one.email }}</a>
+                                <a id={{key}} href="javascript:void(0);" target={{ value.order_by_one.email }} onClick="notify_user({{ key }});return false;">{{ value.order_by_one.email }}</a>
                                                 </td>
 						{%endif%}
 					</tr>
@@ -239,7 +239,15 @@ function change_state(order_id)
 
 function notify_user(order_id)
 {
-	var email = document.getElementById("notifyUser").innerHTML;
+	var list = document.getElementsByTagName("a");
+	var email = "null";
+	for(var i = 0; i < list.length; i++) {
+		var temp = list[i].getAttribute("target");
+		var temp_id = list[i].getAttribute("id");
+		if(temp != "null" && temp_id == order_id) {
+			email = temp;
+		}
+	}
     var text = "Will send an email to " + email + " to notify the user?";
     var ret = confirm(text);
     if(ret != true) {
