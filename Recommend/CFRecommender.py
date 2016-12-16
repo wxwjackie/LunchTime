@@ -38,8 +38,7 @@ class CFRecommender(BaseRecommender):
         print "recommends=", recommends
         if not recommends:
             sorted_frequency_map = OrderUtils.get_consine_frequency(self._user_name)
-            recommends = sorted_frequency_map
-            [item[0] for item in sorted_frequency_map]
+            return [item[0] for item in sorted_frequency_map]
         # keep the return value corresponding with MostFreqRecommender, just return cousine name
         return [item[1] for item in recommends]
 
