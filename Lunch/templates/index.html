@@ -150,7 +150,7 @@
 			<!-- here, we use for item in django to get the manu from database -->
 			{% for cousine in manu_list %}
 			<div class="order-top">
-				<li class="im-g"><a href="#"><img src="{% static cousine.picture %}" class="img-responsive" alt=""></a></li>
+				<li class="im-g"><a href="#"><img src="{% static cousine.picture.url %}" class="img-responsive" alt=""></a></li>
 				<li class="data">
 					<h3>{{ cousine.cousine_name}}</h3>
 					<h4>{{cousine.restaurant_name}}</h4>

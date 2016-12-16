@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 MEDIA_ROOT = 'Lunch/static/dish_images/'
+MEDIA_URL = '/dish_images/'
 # Application definition
 
 INSTALLED_APPS = [
